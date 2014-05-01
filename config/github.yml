@@ -1,0 +1,19 @@
+development:
+  key: ff60706a771b5765499b
+  secret: a2a76abc5511d70e8243db2e02d0da629c550e1c
+  status_store: false
+
+test:
+  key: ff60706a771b5765499b
+  secret: a2a76abc5511d70e8243db2e02d0da629c550e1c
+  status_store: false
+
+#production:
+ # key: 7609f05e88f3598efd44
+  #secret: 2c0aac6d52f0c9206fc7d389fd28e17f832e92ba
+  #status_store: false
+
+production:
+    key: 7609f05e88f3598efd44
+    secret: 2c0aac6d52f0c9206fc7d389fd28e17f832e92ba
+    status_store: false

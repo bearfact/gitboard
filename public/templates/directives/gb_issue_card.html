@@ -1,0 +1,76 @@
+<div class="panel issue-card">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <a href="{{issue.html_url}}" target="_blank">#{{issue.number}}</a>
+            <span class="pull-right issue-text-popover clickable" data-toggle="popover" title="" data-container="body" data-content="{{issue.body || ' '}}" role="button" data-placement="bottom"><i class="glyphicon glyphicon-file"></i></span>
+            <div class="pull-right clickable milestone-dropdown">
+                <div class="dropdown">
+                    <i class="dropdown-toggle glyphicon glyphicon-road clickable" type="button" id="dropdownMenu1" data-toggle="dropdown"></i>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" ng-click="change_milestone(issue, 0)">
+                                <i class="glyphicon glyphicon-star" ng-show="!issue.milestone.id"></i>
+                                &nbsp;No Milestone
+                            </a>
+                        </li>
+                        <li role="presentation" ng-repeat="milestone in all_milestones">
+                            <a role="menuitem" tabindex="-1" ng-click="change_milestone(issue, milestone)">
+                                <i class="glyphicon glyphicon-star" ng-show="issue.milestone.number == milestone.number"></i>
+                                &nbsp;{{milestone.title}}
+                            </a>
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-{{milestoneHelper.progressBarType(milestone)}}" role="progressbar" aria-valuenow="{{(miletone.closed_issues/(milestone.open_issues + milestone.closed_issues))*100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{calc_milestone_percent(milestone)}}%;">
+                                    <span class="sr-only">{{calc_milestone_percent(milestone)}}% Complete</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pull-right clickable users-dropdown">
+                <div class="dropdown">
+                    <i class="dropdown-toggle glyphicon glyphicon-user clickable" type="button" id="dropdownMenu1" data-toggle="dropdown"></i>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation" ng-repeat="user in assignable_users">
+                            <a role="menuitem" tabindex="-1" ng-click="assign_user(issue, user)">
+                                <img ng-src="{{user.avatar_url}}"/>
+                                <i class="glyphicon glyphicon-star" ng-show="issue.assignee.login == user.login "></i>
+                                &nbsp;{{user.login}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pull-right clickable priority-dropdown">
+                <div class="dropdown">
+                    <i class="dropdown-toggle glyphicon glyphicon-exclamation-sign clickable" type="button" id="dropdownMenu3" data-toggle="dropdown"></i>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
+                        <li role="presentation" ng-repeat="priority in priorities">
+                            <a role="menuitem" tabindex="-1" ng-click="change_priority(issue, priority)">
+                              <i class="glyphicon glyphicon-star" ng-show="issue.priority == priority.id"></i>
+                                &nbsp;{{priority.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div>
+            {{issue.title}}
+        </div>
+
+    </div>
+    <div class="panel-footer">
+        <div>
+            <img ng-src="{{issue.assignee.avatar_url}}"/>
+            <span>{{issue.assignee.login}}</span>
+        </div>
+        <div class="h-separator"></div>
+        <div class="badges">
+            <span class="issue-badge" ng-style="{'background-color': '#'+label.color}"ng-repeat="label in issue.labels">{{label.name}}</span>
+        </div>
+    </div>
+</div>
