@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="modal-title">#{{issue.number}} - {{issue.title}}</h4>
+</div>
+<div class="modal-body">
+	<div class="form-group">
+	  <textarea rows="4" ng-model="form.comment" class="form-control" placeholder="Enter your comment..."></textarea>
+	 </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link btn-sm" ng-click="cancel()">Cancel</button>
+  <button type="button" class="btn btn-success btn-sm" ng-click="ok()">Comment</button>
+  <button type="button" class="btn btn-primary btn-sm" ng-click="comment_and_close()" ng-show="can_close">Close and Comment</button>
+</div>
+
+

@@ -1,0 +1,79 @@
+<% content_for :head do %>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<title>GitBoard</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/css/flatty.bootstrap.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="/css/main.css" rel="stylesheet">
+
+<!-- Fonts from Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+<% end %>
+
+<body>
+<div class="container">
+<div class="row mt centered">
+    <div class="col-lg-6 col-lg-offset-3">
+        <h1>Here is the skinny</h1>
+        <h3>Gitboard can help you track the flow of your GitHub&#0153; issues</h3>
+    </div>
+</div><!-- /row -->
+
+<div class="row mt centered">
+    <div class="col-lg-8 col-lg-offset-2">
+      <img src="/img/ser03.png" width="180" alt="">
+        <h4>Terms of Use</h4>
+        <p>This is a beta project.  It is currently free for unlimited use.  No guarantees are made regarding accessibility or uptime.  Your access may be revoked at anytime.</p>
+        <%= button_to 'No thanks', {:controller => "sessions", :action => "destroy"} , :method=>:get , :class => 'btn btn-block' %>
+        <br/>
+        <%= button_to 'I agree to those terms', {:controller => "welcome", :action => "agree"} , :method=>:post , :class => 'btn btn-success btn-block' %>
+    </div><!--/col-lg-4 -->
+</div><!-- /row -->
+</div><!-- /container -->
+
+
+<div class="container" style="display: none;">
+<hr>
+    <div class="row mt centered">
+        <div class="col-lg-6 col-lg-offset-3">
+            <h1>Our Awesome Team.</h1>
+            <h3></h3>
+        </div>
+    </div><!-- /row -->
+
+    <div class="row mt centered">
+        <div class="col-lg-4 col-lg-offset-4">
+            <img class="img-circle" src="/img/profile.jpg" width="140" alt="">
+            <h4>Joey Crone</h4>
+            <p>I'm a guy who works at a job making websites.</p>
+            <p style="display: none;"><i class="glyphicon glyphicon-send"></i> <i class="glyphicon glyphicon-phone"></i> <i class="glyphicon glyphicon-globe"></i></p>
+        </div><!--/col-lg-4 -->
+    </div><!-- /row -->
+</div><!-- /container -->
+
+<div class="container">
+    <hr>
+    <p class="centered">Created by Joey Crone - This layout from BlackTie.co</p>
+</div><!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/js/flatty.bootstrap.min.js"></script>
+</body>

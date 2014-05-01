@@ -1,0 +1,71 @@
+<tabset class="repo-edit-modal">
+    <tab heading="Details">
+        <form class="form-horizontal edit-repository" role="form" id="new_repository">
+            <fieldset>
+                <legend>Edit a Repository</legend>
+                <label for="repo_owner" class="control-label">Repository Owner</label>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="repo_owner" name="repo_owner" placeholder="repository owner" ng-model="repo.owner" autocomplete="on"  disabled required>
+                    </div>
+                </div>
+                <label for="repo_name" class="control-label">Repository Name</label>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="repo_name" name="repo_name" placeholder="repository name" ng-model="repo.name"  autocomplete="off" disabled required>
+                    </div>
+                </div>
+                <label for="repo_url" class="control-label">Repository URL</label>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="repo_name" name="repo_url" placeholder="repository url" ng-model="repo.url"  autocomplete="off" disabled required>
+                    </div>
+                </div>
+                <label for="repo_name" class="control-label">Repository Description</label>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="repo_desc" name="repo_desc" placeholder="repository description" ng-model="repo.description"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </tab>
+    <tab heading="Columns">
+        <div class="row">
+            <div class="col-sm-8">
+                <h5 class="">* Drag to reorder columns</h5>
+            </div>
+            <div class="col-sm-4">
+                <a class="btn btn-primary btn-sm pull-right add-column-button" ng-click="add_new_column()"><i class="fa fa-plus"></i>Add New Column</a>
+            </div>
+        </div>
+        <ul ui-sortable="sortableOptions" ng-model="list" class="column-list">
+            <li ng-repeat="item in list" class="item">
+                <div class="bs-callout" ng-class="{'bs-callout-success': !item.id, 'bs-callout-danger': item._destroy}">
+                    <input type="text" ng-model="item.name"/> <input type="text" ng-model="item.label"/>
+                    <a class="pull-right remove-button-icon" ng-click="remove_column(item)" ng-show="!item._destroy"><i class="fa fa-times-circle-o fa-2x"></i></a>
+                    <a class="btn btn-link btn-sm  pull-right" ng-click="undo_column(item)" ng-show="item._destroy">Undo</a>
+                </div>
+            </li>
+        </ul>
+    </tab>
+    <tab heading="Webhook">
+        <div class="row">
+            <div class="col-sm-12">
+                <h5 class="">Github webhook for newly opened or closed issues</h5>
+            </div>
+            <div class="col-sm-4">
+                <a class="btn btn-primary btn-sm" ng-show="hook" ng-click="toggle_webhook()">Enabled</a>
+                <a class="btn btn-default btn-sm" ng-show="!hook" ng-click="toggle_webhook()">Disabled</a>
+            </div>
+        </div>
+    </tab>
+</tabset>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-link btn-sm" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-success btn-sm" ng-click="ok()">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-sm-8 col-md-5">
+        <ol class="breadcrumb" ng-show="sprint">
+            <li><a href="#/sprints">Sprints</a></li>
+            <li><a>{{sprint.name}}</a></li>
+            <li class="active">Sprint Board</li>
+        </ol>
+    </div>
+    <div class="pull-right points-complete">
+        <div class="well">{{completed_points}} / {{total_points}} points</div>
+    </div>
+
+    <div class="pull-right days-left" ng-if="sprint.due_date">
+        <div class="alert alert-{{threat_level(completed_points, total_points, days_left)}}">Due in {{days_left}} days</div>
+    </div>
+</div>
+
+<div class="row issues-board">
+    <div class="filters" ng-class="{ 'open': filtersopen}">
+        <div class="toggler" ng-click="toggle_filter()">
+            <i class="glyphicon glyphicon-search"></i>
+        </div>
+        <nav>
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-class="{active: query.login == current_user.login}">
+                    <a ng-click="set_assignee(current_user.login)">
+                        <span class="badge pull-right">{{my_issues_count}}</span>
+                        My Issues
+                    </a>
+                </li>
+                <li ng-class="{active: query.login == ''}">
+                    <a ng-click="set_assignee('')">
+                        <span class="badge pull-right">{{issues.length}}</span>
+                        All Issues
+                    </a>
+                </li>
+                <li ng-class="{active: query.login == 'Unassigned'}">
+                    <a ng-click="set_assignee('Unassigned')">
+                        <span class="badge pull-right">{{unassigned_issues_count}}</span>
+                        Unassigned Issues
+                    </a>
+                </li>
+            </ul>
+            <div class="issues-board-query">
+                <form  role="form">
+                    <div class="form-group">
+                        <div>Full Text:</div>
+                        <input type="search" class="form-control input-sm" id="search" placeholder="Search Issues" ng-model="query.searchText">
+                    </div>
+                    <div class="form-group">
+                        <div>Assignee:</div>
+                        <select class="form-control input-sm" id="login" ng-model="query.login">
+                            <option value="" selected>All</option>
+                            <option ng-repeat="u in users" value="{{u.login}}" ng-selected="query.login == u.login">{{u.login}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div>Milestone:</div>
+                        <select class="form-control input-sm col-md-2" id="login" ng-model="query.milestone">
+                            <option value="" selected>All</option>
+                            <option ng-repeat="m in milestones" value="{{m}}" ng-selected="query.milestone == m">{{m}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div>Group By:</div>
+                        <select class="form-control input-sm" id="login" ng-model="query.order">
+                            <option value="number" selected>issue #</option>
+                            <option value="assignee.login">assignee</option>
+                            <option value="milestone.title">milestone</option>
+                            <option value="priority">priority</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="btn btn-default btn-block btn-xs" ng-click="clear_filters()">Clear Filters</div>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <div class="col-sm-12 col-md-12" ng-click="close_filters()">
+        <ul class="loader" ng-show="loading">
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <table class="issues-table table">
+            <thead>
+                <tr>
+                    <th ng-repeat-start="status in sprint.issues_statuses"class="title">{{status.name}}</th>
+                    <th ng-repeat-end></th>
+                </tr>
+                <tr></tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+                <tr>
+                    <td class="drop-container pos{{status.position}}" droppable drop="status.position" ng-repeat-start="status in sprint.issues_statuses">
+                        <div ng-repeat="issue in issues | status: status.position | assignee: query.login | filter: query.searchText | milestone: query.milestone | orderBy:query.order" draggable id="issue_{{issue.id}}">
+                            <gb-issue-card status="{{status.position}}"></gb-issue-card>
+                        </div>
+                    </td>
+                    <td class="td-for-border" ng-repeat-end></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

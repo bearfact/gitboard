@@ -1,0 +1,16 @@
+//= require_self
+//= require jquery/dist/jquery.min.js
+//= require jquery-ui/ui/minified/jquery-ui.min.js
+//= require toastr/toastr.min.js
+//= require bootstrap/dist/js/bootstrap.min.js
+//= require underscore/underscore.js
+//= require moment/min/moment.min.js
+//= require angular/angular.js
+//= require angular-route/angular-route.min.js
+//= require angular-animate/angular-animate.min.js
+//= require angular-bootstrap/ui-bootstrap.min.js
+//= require angular-bootstrap/ui-bootstrap-tpls.min.js
+//= require restangular/dist/restangular.min.js
+//= require angular-ui-sortable/sortable.min.js
+//= require angular-sweetalert/SweetAlert.min.js
+//= require sweetalert/dist/sweetalert.min.js
