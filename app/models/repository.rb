@@ -16,8 +16,8 @@ class Repository < ActiveRecord::Base
       end
     end
 
-    def has_member?(owner, name, user)
-      user.login == owner || !Repository.where({owner: owner, name: name, user_id: user.id}).first.nil?
+    def self.has_member?(owner, name, user)
+      user.login == owner || RepositoryUser.joins(:repository).where({user_id: user.id,repositories: {owner: owner, name: name}}).count > 0
     end
 
     def self.create_or_assign(current_user, data)

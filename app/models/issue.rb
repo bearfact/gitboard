@@ -14,6 +14,12 @@ class Issue
         end
     end
 
+    def self.publish_update_notice(res, owner, repo, channel, event)
+        statuses = Repository.where({owner: owner, name: repo}).first.issues_statuses.order("position desc")
+        issue = add_caluclated_value res, statuses
+        WebsocketRails[owner+":"+repo+":"+channel].trigger(event, issue)
+    end
+
     private
     def self.add_caluclated_value (issue, statuses)
         if IssuesStatus::GITHUB_DB_STORE
@@ -32,6 +38,7 @@ class Issue
         issue
     end
 
+    private
     def self.determine_status(labels, statuses)
         label_names = labels.collect{|label| label["name"]}
         statuses.each do |is|

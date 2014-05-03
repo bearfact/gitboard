@@ -18,3 +18,5 @@
 //= require_directory ./directives
 //= require_directory ./filters
 //= require_directory ./services
+//= require websocket_rails/main
+

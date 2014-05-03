@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
     def authenticate_user
         respond_to do |format|
           format.html {
-              Rails.logger.info "*********format is html"
               if current_user.nil?
                   redirect_to "/signin"
               elsif(current_user.status_id != 1)
@@ -18,7 +17,6 @@ class ApplicationController < ActionController::Base
               end
            }
           format.json {
-              Rails.logger.info "*************** json request"
               if current_user.nil?
                  render json: {error: "session_timeout"}, status: 403
               elsif(current_user.status_id != 1)

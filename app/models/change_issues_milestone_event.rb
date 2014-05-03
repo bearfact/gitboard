@@ -18,7 +18,10 @@ class ChangeIssuesMilestoneEvent
     def save
         self.milestone_number = nil if self.milestone_number == 0
         github = user.git_client
-        issue = github.issues.edit user: self.owner, repo: self.repo, number: self.issue_number, milestone: self.milestone_number
+        github.issues.edit user: self.owner, repo: self.repo, number: self.issue_number, milestone: self.milestone_number
+        res = Issue.fetch_single_issue self.owner, self.repo, self.issue_number, github
+        Issue.publish_update_notice(res, self.owner, self.repo, "issues", "updated")
+        res
     end
     alias :save! :save
 

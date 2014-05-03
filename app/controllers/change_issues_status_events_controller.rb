@@ -1,5 +1,4 @@
 class ChangeIssuesStatusEventsController < ApplicationController
-
     def create
         cise = ChangeIssuesStatusEvent.new({
             user: current_user,
@@ -10,7 +9,7 @@ class ChangeIssuesStatusEventsController < ApplicationController
             owner: params[:owner],
             repo: params[:repo]
         })
-        res = cise.save
+        res = cise.save    
         render json: {issue: res}, status: 200
     end
 

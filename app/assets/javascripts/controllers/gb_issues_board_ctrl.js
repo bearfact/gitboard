@@ -7,6 +7,23 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
     $scope.milestoneHelper = milestoneHelper;
     var restangular_user = null;
     $scope.query = {login: '', milestone: '', order: 'number'};
+    $scope.issues = [];
+
+    var dispatcher = new WebSocketRails(window.location.host+':3001/websocket');
+
+    var channel = dispatcher.subscribe_private(stateService.getCurrentOwner()+":"+ stateService.getCurrentRepository()+":"+"issues");
+    channel.bind('updated', function(data) {
+      issue = undy.findWhere($scope.issues, {id: data.id});
+      $scope.$apply(function () {
+            angular.extend(issue, data);
+        });
+    });
+
+
+    $scope.$on('$destroy', function cleanup() {
+        channel.destroy();
+        dispatcher.disconnect();
+    });
 
 
     $scope.$on("issueDropEvent", function(event, issue) {

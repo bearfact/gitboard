@@ -36,11 +36,12 @@ class ChangeIssuesStatusEvent
             if !new_github_status_label.blank?
                 github.issues.labels.add self.owner, self.repo, self.issue_number, new_github_status_label
             end
-            Rails.logger.info("*************** #{old_github_status_label}")
             if !old_github_status_label.blank?
                 github.issues.labels.remove self.owner, self.repo, self.issue_number, label_name: old_github_status_label
             end
-            Issue.fetch_single_issue self.owner, self.repo, self.issue_number, github
+            res = Issue.fetch_single_issue self.owner, self.repo, self.issue_number, github
+            Issue.publish_update_notice(res, self.owner, self.repo, "issues", "updated")
+            res
         end
     end
     alias :save! :save
