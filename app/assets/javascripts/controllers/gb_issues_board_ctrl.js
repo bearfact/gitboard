@@ -8,7 +8,7 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
     var restangular_user = null;
     $scope.query = {login: '', milestone: '', order: 'number'};
     $scope.issues = [];
-
+    debugger;
     console.log("dispatcher at "+window.location.host);
     var dispatcher = new WebSocketRails(window.location.host+':3001/websocket');
     window.ddd = dispatcher
