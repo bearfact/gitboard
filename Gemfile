@@ -46,8 +46,8 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'websocket-rails'
 
 # Use unicorn as the app server
-#gem 'unicorn'
-gem 'puma'
+gem 'unicorn'
+#gem 'puma'
 
 gem 'capistrano', '~> 2.15.1'
 
