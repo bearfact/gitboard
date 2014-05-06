@@ -16,6 +16,30 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
       $scope.$apply(function () {
             angular.extend(issue, data);
         });
+        toastHelper.showSuccess("Issue "+ issue.number+" has been updated");
+    });
+
+    channel.bind('opened', function(data) {
+      $scope.$apply(function () {
+            $scope.issues.push(data);
+        });
+      toastHelper.showSuccess("Issue #"+ data.number+" opened");
+    });
+
+    channel.bind('closed', function(data) {
+        var index = -1;
+        _.each($scope.issues, function(obj, idx){
+            if(obj.id == data.id){
+                  index = idx;
+                  return false;
+              }
+        });
+        if(index > -1){
+            $scope.$apply(function(){
+                $scope.issues.splice(index, 1);
+            });
+        }
+        toastHelper.showSuccess("Issue #"+ data.number+" closed");
     });
 
 

@@ -11,7 +11,7 @@ Gitboard::Application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get 'sign_out', to: 'sessions#destroy'
   get '/partials/*path' => 'partials#index'
-
+  post '/issueshook' => 'issueshook#triggered'
 
   resources :users
   resources :sessions
