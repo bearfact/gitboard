@@ -51,6 +51,7 @@ class Issue
     end
 
     def self.determine_priority(labels)
+        labels ||= []
         labels = labels.collect{|label| label["name"]}
         value = IssuesPriority::DATA.size  + 1
         IssuesPriority.all.each do |priority|
