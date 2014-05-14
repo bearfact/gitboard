@@ -40,6 +40,7 @@ class Issue
 
     private
     def self.determine_status(labels, statuses)
+        labels ||= []
         label_names = labels.collect{|label| label["name"]}
         statuses.each do |is|
           if label_names.include? is.label

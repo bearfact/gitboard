@@ -44,6 +44,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'bcrypt-ruby', '~> 3.1.2'
 
 gem 'websocket-rails'
+gem 'redis'
 
 # Use unicorn as the app server
 gem 'unicorn'
@@ -55,6 +56,10 @@ group :production do
   gem 'therubyracer'
 end
 
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
