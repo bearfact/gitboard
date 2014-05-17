@@ -1,6 +1,6 @@
 class PartialsController < ApplicationController
 
     def index
-        render "partials/#{params[:path]}"
+        render partial: "partials/#{params[:path]}"
       end
 end

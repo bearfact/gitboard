@@ -6,12 +6,12 @@ gitBoard.directive("appVersion", [
             return elm.text(version);
         };
     }
-    ]);
+]);
 
 gitBoard.directive("gbTopNav", function() {
     return {
         restrict: "E",
-        templateUrl: "/templates/directives/gb_top_nav.html",
+        templateUrl: "/partials/templates/gb_top_nav.html",
         controller: "gbTopNavCtrl"
     };
 });
@@ -19,10 +19,10 @@ gitBoard.directive("gbTopNav", function() {
 gitBoard.directive("gbIssueCard", function() {
     return {
         restrict: "E",
-        templateUrl: "/templates/directives/gb_issue_card.html",
+        templateUrl: "/partials/templates/gb_issue_card.html",
         replace: true,
         link: function(scope, element, attrs) {
-            element.addClass("panel-" + attrs.status);
+            //element.addClass("panel-" + attrs.status);
             return element.find(".issue-text-popover").popover();
         }
     };

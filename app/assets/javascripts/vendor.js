@@ -11,3 +11,4 @@
 //= require angular-bootstrap/ui-bootstrap.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
 //= require restangular/dist/restangular.min.js
+//= require angular-ui-sortable/sortable.min.js

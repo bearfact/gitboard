@@ -21,12 +21,16 @@ class RepositoriesController < ApplicationController
 
     def update
         repo = current_user.repositories.find(params[:id])
-        repo.update(repository_parameters)
-        if repo.save
-            render json: repo, root: false, status: 200
-        else
-            render json: repo.errors, status: 422
-        end
+        #if(repo.user_id == current_user.id)
+            repo.update(repository_parameters)
+            if repo.save
+                render json: repo, root: false, status: 200
+            else
+                render json: repo.errors, status: 422
+            end
+        #else
+        #    render json: "not authorized to perform that action", status: 403
+        #end
     end
 
     def destroy
@@ -41,7 +45,7 @@ class RepositoriesController < ApplicationController
 
     private
     def repository_parameters
-        params.permit(:owner, :name, :description, :url)
+        params.permit(:owner, :name, :description, :url, issues_statuses_attributes: [:id, :name, :label, :position, :_destroy])
     end
 
 end

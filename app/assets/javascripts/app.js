@@ -1,6 +1,6 @@
 "use strict";
 
-var gitBoard = angular.module("gitBoard", ["ngAnimate", "ngRoute", "restangular", "ui.bootstrap"]);
+var gitBoard = angular.module("gitBoard", ["ngAnimate", "ngRoute", "restangular", "ui.bootstrap", "ui.sortable"]);
 
 angular.element(document).ready(function() {
     return jQuery.ajax({

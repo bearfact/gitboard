@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">
             <a href="{{issue.html_url}}" target="_blank">#{{issue.number}}</a>
-            <span class="pull-right issue-text-popover clickable" data-toggle="popover" title="" data-container="body" data-content="{{issue.body || ' '}}" role="button" data-placement="bottom"><i class="glyphicon glyphicon-file"></i></span>
+            <span class="pull-right issue-text-popover clickable" popover="{{issue.body || ' '}}"  role="button" popover-placement="bottom"><i class="glyphicon glyphicon-file"></i></span>
             <div class="pull-right clickable milestone-dropdown">
                 <div class="dropdown">
                     <i class="dropdown-toggle glyphicon glyphicon-road clickable" type="button" id="dropdownMenu1" data-toggle="dropdown"></i>
@@ -23,20 +23,6 @@
                                     <span class="sr-only">{{calc_milestone_percent(milestone)}}% Complete</span>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="pull-right clickable users-dropdown">
-                <div class="dropdown">
-                    <i class="dropdown-toggle glyphicon glyphicon-user clickable" type="button" id="dropdownMenu1" data-toggle="dropdown"></i>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation" ng-repeat="user in assignable_users">
-                            <a role="menuitem" tabindex="-1" ng-click="assign_user(issue, user)">
-                                <img ng-src="{{user.avatar_url}}"/>
-                                <i class="glyphicon glyphicon-star" ng-show="issue.assignee.login == user.login "></i>
-                                &nbsp;{{user.login}}
-                            </a>
                         </li>
                     </ul>
                 </div>
@@ -64,10 +50,25 @@
 
     </div>
     <div class="panel-footer">
-        <div>
+        <div class="clickable users-dropdown">
+            <div class="dropdown">
+                <img ng-src="{{issue.assignee.avatar_url}}" type="button"  id="dropdownMenu1" data-toggle="dropdown"/><span>{{issue.assignee.login}}</span>
+                <!--<i class="dropdown-toggle glyphicon glyphicon-user clickable" type="button" id="dropdownMenu1" data-toggle="dropdown"></i>-->
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation" ng-repeat="user in assignable_users">
+                        <a role="menuitem" tabindex="-1" ng-click="assign_user(issue, user)">
+                            <img ng-src="{{user.avatar_url}}"/>
+                            <i class="glyphicon glyphicon-star" ng-show="issue.assignee.login == user.login "></i>
+                            &nbsp;{{user.login}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--<div>
             <img ng-src="{{issue.assignee.avatar_url}}"/>
             <span>{{issue.assignee.login}}</span>
-        </div>
+        </div> -->
         <div class="h-separator"></div>
         <div class="badges">
             <span class="issue-badge" ng-style="{'background-color': '#'+label.color}"ng-repeat="label in issue.labels">{{label.name}}</span>

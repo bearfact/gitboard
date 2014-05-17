@@ -3,6 +3,7 @@ class Repository < ActiveRecord::Base
     has_many :repository_users
     has_many :users, :through => :repository_users
     has_many :issues_statuses
+    accepts_nested_attributes_for :issues_statuses, allow_destroy: true
 
     validates_presence_of :owner, :name, :url
     validates_uniqueness_of :name, :scope => [:owner, :user_id]

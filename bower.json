@@ -25,6 +25,7 @@
     "jquery-ui": "~1.10.4",
     "moment": "~2.6.0",
     "underscore": "~1.6.0",
-    "restangular": "~1.4.0"
+    "restangular": "~1.4.0",
+    "angular-ui-sortable": "~0.12.6"
   }
 }
