@@ -84,7 +84,7 @@
             <tbody>
                 <tr></tr>
                 <tr>
-                    <td class="drop-container" droppable drop="status.position" ng-repeat-start="status in current_repository.issues_statuses">
+                    <td class="drop-container pos{{status.position}}" droppable drop="status.position" ng-repeat-start="status in current_repository.issues_statuses">
                         <div ng-repeat="issue in issues | status: status.position | assignee: query.login | filter: query.searchText | milestone: query.milestone | orderBy:query.order" draggable id="issue_{{issue.id}}">
                             <gb-issue-card status="{{status.position}}"></gb-issue-card>
                         </div>
