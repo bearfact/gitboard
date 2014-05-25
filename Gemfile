@@ -48,7 +48,7 @@ gem 'redis'
 
 # Use unicorn as the app server
 gem 'unicorn'
-#gem 'puma'
+
 
 gem 'capistrano', '~> 2.15.1'
 

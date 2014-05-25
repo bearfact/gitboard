@@ -60,7 +60,10 @@
     //border-bottom: 1px solid #e5e5e5
   .td-for-border
     width: 1%
-
+  td:nth-child(odd)
+    border-width: 2px
+    border-style: dashed
+    border-color: transparent
 
 .drop-container
   min-width: 194px
@@ -68,7 +71,6 @@
   padding: 5px
   vertical-align: top
   min-height: 200px
-  border: 2px dashed transparent
   &.over
     &:nth-child(1)
       border-color: #3DB5D8
