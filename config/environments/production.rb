@@ -87,5 +87,4 @@ Gitboard::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.middleware.delete Rack::Lock
-  config.threadsafe!
 end
