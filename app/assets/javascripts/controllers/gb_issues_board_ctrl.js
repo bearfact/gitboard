@@ -8,7 +8,7 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
     var restangular_user = null;
     $scope.query = {login: '', milestone: '', order: 'number'};
     $scope.issues = [];
-    var dispatcher = new WebSocketRails(window.location.host+'/websocket');
+    var dispatcher = new WebSocketRails(window.location.host+':3001/websocket');
 
     var channel = dispatcher.subscribe_private(stateService.getCurrentOwner()+":"+ stateService.getCurrentRepository()+":"+"issues");
     channel.bind('updated', function(data) {
