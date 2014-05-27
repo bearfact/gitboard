@@ -71,3 +71,5 @@ group :test do
     gem 'capybara'
     gem 'guard-rspec'
 end
+
+ruby '2.1.1'

@@ -14,7 +14,8 @@ set :repository, "git@github.com:bearfact/#{application}.git"
 set :branch, "master"
 
 default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
+#ssh_options[:forward_agent] = true
+set :ssh_options, { :forward_agent => true }
 
 before 'deploy:assets:precompile' do
   run "cd #{latest_release} && bower install"
@@ -22,9 +23,9 @@ end
 
 namespace :deploy do
   %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
+    desc "#{command} thin server"
     task command, roles: :app, except: {no_release: true} do
-      run "/etc/init.d/unicorn_#{application} #{command}"
+      run "/etc/init.d/thin_#{application} #{command}"
     end
   end
 
