@@ -1,20 +1,20 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          unicorn
+# Provides:          thin
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Manage unicorn server
-# Description:       Start, stop, restart unicorn server for a specific application.
+# Short-Description: Manage thin server
+# Description:       Start, stop, restart thin server for a specific application.
 ### END INIT INFO
 set -e
 
 # Feel free to change any of the following variables for your app:
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/home/deployer/apps/gitboard/current
-PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="cd $APP_ROOT; bundle exec unicorn -D -c $APP_ROOT/config/unicorn.rb -E production; bundle exec rake websocket_rails:start_server RAILS_ENV=production"
+PID=$APP_ROOT/tmp/pids/thin.pid
+CMD="cd $APP_ROOT; bundle exec thin start -C /etc/thin/gitboard.yml"
 AS_USER=deployer
 set -u
 

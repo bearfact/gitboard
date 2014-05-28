@@ -47,7 +47,8 @@ gem 'websocket-rails'
 gem 'redis'
 
 # Use unicorn as the app server
-gem 'unicorn'
+#gem 'unicorn'
+gem 'thin'
 
 
 gem 'capistrano', '~> 2.15.1'
