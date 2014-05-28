@@ -1,4 +1,4 @@
-class ChangeIssuesPriorityEventsController < ApplicationController
+class ChangeIssuesPriorityEventsController < ApiController
 
     def create
         cise = ChangeIssuesPriorityEvent.new({
@@ -11,7 +11,7 @@ class ChangeIssuesPriorityEventsController < ApplicationController
             repo: params[:repo]
         })
         res = cise.save
-        render json: {issue: res}, status: 200
+        render json: {issue: res}
     end
 
 end

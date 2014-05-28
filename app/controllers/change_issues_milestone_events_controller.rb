@@ -1,4 +1,4 @@
-class ChangeIssuesMilestoneEventsController < ApplicationController
+class ChangeIssuesMilestoneEventsController < ApiController
 
     def create
         cime = ChangeIssuesMilestoneEvent.new({
@@ -9,7 +9,7 @@ class ChangeIssuesMilestoneEventsController < ApplicationController
             milestone_number: params[:milestone_number]
             })
         cime.save
-        render json: true, status: 200
+        render json: true
     end
 
 end

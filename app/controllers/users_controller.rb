@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < ApiController
 
     def index
         github = current_user.git_client
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
             users_array << me.to_hash
         end
         users_array << {login: "Unassigned", avatar_url: "/img/unassigned.jpg"}
-        render json: users_array, status: 200
+        render json: users_array
     end
 
     def show
@@ -27,16 +27,16 @@ class UsersController < ApplicationController
         end
     end
 
-    def new
-        @user = User.new
-    end
+    #def new
+    #    @user = User.new
+    #end
 
     def update
         user = User.find(params[:id])
         if !user.nil?
             user.issues_board_settings= user_parameters[:issues_board_settings]
             if user.save
-                render json: user, status: 200
+                render json: user
             else
                 render json: nil, status: 422
             end

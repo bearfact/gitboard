@@ -27,4 +27,5 @@ Gitboard::Application.configure do
   # number of complex assets.
 
   config.middleware.delete Rack::Lock
+  config.middleware.delete ActionDispatch::Flash
 end

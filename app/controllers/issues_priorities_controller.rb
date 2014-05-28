@@ -1,7 +1,7 @@
-class IssuesPrioritiesController < ApplicationController
+class IssuesPrioritiesController < ApiController
 
     def index
         priorities = IssuesPriority.all
-        render json: priorities, status: 200
+        render json: priorities
     end
 end

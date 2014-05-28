@@ -1,4 +1,4 @@
-class AssignIssueEventsController < ApplicationController
+class AssignIssueEventsController < ApiController
 
     def create
         aie = AssignIssueEvent.new({
@@ -8,7 +8,7 @@ class AssignIssueEventsController < ApplicationController
             owner: params[:owner],
             user_login: params[:user_login]})
         aie.save
-        render json: true, status: 200
+        render json: true
     end
 
 end

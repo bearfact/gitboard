@@ -1,4 +1,4 @@
-class GithubRepositoriesController < ApplicationController
+class GithubRepositoriesController < ApiController
 
     def index
         github = current_user.git_client
@@ -22,6 +22,6 @@ class GithubRepositoriesController < ApplicationController
         #else
         #    repos = github.orgs.get params['owner']+"/repos"
         #end
-        render json: all, status: 200
+        render json: all
     end
 end

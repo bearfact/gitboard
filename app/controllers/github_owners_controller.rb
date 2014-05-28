@@ -1,4 +1,4 @@
-class GithubOwnersController < ApplicationController
+class GithubOwnersController < ApiController
 
     def index
         github = current_user.git_client
@@ -8,6 +8,6 @@ class GithubOwnersController < ApplicationController
         repos = github.repos.list
         logins = repos.collect{|r| r.owner.login}.uniq
 
-        render json: (logins + owners).uniq, status: 200
+        render json: (logins + owners).uniq
     end
 end

@@ -1,4 +1,4 @@
-class AppBootstrapController < ApplicationController
+class AppBootstrapController < ApiController
 
     def index
         h = Hash.new
