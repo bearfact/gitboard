@@ -1,6 +1,7 @@
 
 gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $routeParams, stateService, Restangular, undy, $timeout, toastHelper, issuesStatusService, milestoneHelper, $q) {
     $scope.loading = true;
+    $scope.filtersopen = false;
     stateService.setCurrentRepository($routeParams.repository_id);
     stateService.setCurrentOwner($routeParams.owner_id);
     $scope.current_user = stateService.getCurrentUser();
@@ -122,6 +123,16 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
 
 
     //**************** PUBLIC STUFF ******************
+    $scope.close_filters = function(){
+        if($scope.filtersopen){
+            $scope.filtersopen = false;
+        }
+    }
+
+    $scope.toggle_filter = function(){
+        $scope.filtersopen = !$scope.filtersopen
+    }
+
     $scope.set_assignee = function(login){
         $scope.query.login = login;
     }

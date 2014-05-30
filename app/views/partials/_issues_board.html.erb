@@ -12,7 +12,10 @@
 </div>
 
 <div class="row issues-board">
-    <div class="col-sm-12 col-md-2">
+    <div class="filters" ng-class="{ 'open': filtersopen}">
+        <div class="toggler" ng-click="toggle_filter()">
+            <i class="glyphicon glyphicon-search"></i>
+        </div>
         <nav>
             <ul class="nav nav-pills nav-stacked">
                 <li ng-class="{active: query.login == current_user.login}">
@@ -55,7 +58,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <div>Order By:</div>
+                        <div>Group By:</div>
                         <select class="form-control input-sm" id="login" ng-model="query.order">
                             <option value="number" selected>issue #</option>
                             <option value="assignee.login">assignee</option>
@@ -67,7 +70,7 @@
             </div>
         </nav>
     </div>
-    <div class="col-sm-12 col-md-10">
+    <div class="col-sm-12 col-md-12" ng-click="close_filters()">
         <ul class="loader" ng-show="loading">
         	<li></li>
         	<li></li>
