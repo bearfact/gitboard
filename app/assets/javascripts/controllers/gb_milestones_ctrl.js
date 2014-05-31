@@ -2,6 +2,9 @@ gitBoard.controller("gbMilestonesCtrl", function($scope, Restangular, stateServi
     stateService.setFromRoute($routeParams);
     $scope.stateService = stateService;
     $scope.milestoneHelper = milestoneHelper;
+
+    stateService.setCurrentPage("milestones");
+
     $scope.calc_milestone_percent = function(milestone){
         return (milestone.closed_issues/(milestone.closed_issues + milestone.open_issues))*100;
     };

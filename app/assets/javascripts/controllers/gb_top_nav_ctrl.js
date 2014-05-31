@@ -6,6 +6,8 @@ gitBoard.controller("gbTopNavCtrl", function($scope, $location, stateService, $w
     $scope.titleNav = "/";
     $scope.repo_selected = false;
     $scope.repo_url = "";
+    $scope.current_page = "";
+
     $scope.$watch( function () { return stateService.getCurrentRepository(); }, function (data) {
         if(data){
             $scope.repo_selected = true;
@@ -15,6 +17,14 @@ gitBoard.controller("gbTopNavCtrl", function($scope, $location, stateService, $w
             $scope.repo_url = "";
         }
     }, true);
+
+    $scope.$watch( function () { return stateService.getCurrentPage(); }, function (data) {
+        $scope.current_page = stateService.getCurrentPage();
+    }, true);
+
+    $scope.toggle_filter = function(){
+        stateService.setFilterMode(!stateService.getFilterMode());
+    }
 
     $scope.getCurrentUser = function() {
         if (stateService.getCurrentUser()) {

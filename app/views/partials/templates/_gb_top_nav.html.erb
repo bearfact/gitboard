@@ -11,9 +11,10 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav" ng-show="logged_in">
-          <li><a href="#/repositories">Repositories</a></li>
-          <li ng-show="repo_selected"><a href="{{repo_url}}/milestones">Milestones</a></li>
-          <li ng-show="repo_selected"><a href="{{repo_url}}/issues_board">Issues</a></li>
+          <li ng-class="{'active': current_page == 'repos'}"><a href="#/repositories">Repositories</a></li>
+          <li ng-class="{'active': current_page == 'milestones'}" ng-show="repo_selected"><a href="{{repo_url}}/milestones">Milestones</a></li>
+          <li ng-class="{'active': current_page == 'issues'}" ng-show="repo_selected"><a href="{{repo_url}}/issues_board">Issues</a></li>
+          <li ng-show="current_page == 'issues'" ng-click="toggle_filter()"><a href=""><i class="glyphicon glyphicon-search"></i></a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right" ng-show="logged_in">

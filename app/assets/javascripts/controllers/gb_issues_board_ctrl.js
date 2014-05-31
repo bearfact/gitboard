@@ -47,11 +47,23 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
         toastHelper.showSuccess("Issue #"+ data.number+" closed");
     });
 
+    stateService.setCurrentPage("issues");
+
 
     $scope.$on('$destroy', function cleanup() {
         channel.destroy();
         dispatcher.disconnect();
+        stateService.setCurrentPage("");
     });
+
+
+    $scope.$watch( function () { return stateService.getFilterMode(); }, function (data) {
+        if(data){
+            $scope.filtersopen = true;
+        }else{
+            $scope.filtersopen = false;
+        }
+    }, true);
 
 
     $scope.$on("issueDropEvent", function(event, issue) {
@@ -127,13 +139,11 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
         $scope.query = {login: '', milestone: '', order: 'number', searchText: ''};
     }
     $scope.close_filters = function(){
-        if($scope.filtersopen){
-            $scope.filtersopen = false;
-        }
+        stateService.setFilterMode(false);
     }
 
     $scope.toggle_filter = function(){
-        $scope.filtersopen = !$scope.filtersopen
+        stateService.setFilterMode(!stateService.getFilterMode());
     }
 
     $scope.set_assignee = function(login){

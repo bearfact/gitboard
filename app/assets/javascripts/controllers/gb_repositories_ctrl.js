@@ -1,6 +1,6 @@
 gitBoard.controller("gbRepositoriesCtrl", function($scope, $modal, Restangular, toastHelper, undy, stateService) {
     stateService.setFromRoute({});
-    stateService.setActivePage('repos');
+    stateService.setCurrentPage('repos');
     $scope.delete_repo = function(repo){
         repo.remove().then(function(){
             $scope.repositories = undy.without($scope.repositories, repo);

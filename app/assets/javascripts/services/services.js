@@ -68,7 +68,8 @@ gitBoard.value("version", "0.1").factory("myHttpInterceptor", function($q, $loca
         getStatusById: function(id) {}
     };
 }).service("stateService", function() {
-    var currentOwner, currentRepository, currentUser, issues_statuses, currentPage;
+    var currentOwner, currentRepository, currentUser, issues_statuses, currentPage, filter_mode;
+    filter_mode = false;
     currentRepository = void 0;
     currentOwner = void 0;
     currentUser = void 0;
@@ -99,7 +100,10 @@ gitBoard.value("version", "0.1").factory("myHttpInterceptor", function($q, $loca
         setIssuesStatuses: function(statuses) {
             return issues_statuses = statuses;
         },
-        setActivePage: function(page){
+        getCurrentPage: function(){
+            return currentPage;
+        },
+        setCurrentPage: function(page){
             return currentPage = page;
         },
         setFromRoute: function(routeInfo){
@@ -108,6 +112,12 @@ gitBoard.value("version", "0.1").factory("myHttpInterceptor", function($q, $loca
         },
         repositoryUrl: function(){
             return "#/owners/"+this.getCurrentOwner()+"/repositories/"+this.getCurrentRepository();
+        },
+        getFilterMode: function() {
+            return filter_mode;
+        },
+        setFilterMode: function(val) {
+            return filter_mode = val;
         }
     };
 });
