@@ -123,6 +123,9 @@ gitBoard.controller("gbIssuesBoardCtrl", gbIssuesBoardCtrl = function($scope, $r
 
 
     //**************** PUBLIC STUFF ******************
+    $scope.clear_filters = function(){
+        $scope.query = {login: '', milestone: '', order: 'number', searchText: ''};
+    }
     $scope.close_filters = function(){
         if($scope.filtersopen){
             $scope.filtersopen = false;
