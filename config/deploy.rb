@@ -55,7 +55,7 @@ namespace :deploy do
     end
   end
 
-  before "deploy", "deploy:check_revision"
+  #before "deploy", "deploy:check_revision"
 
   before "deploy" do
       #run "cd #{current_release} && bundle exec rake websocket_rails:stop_server"
