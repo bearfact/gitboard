@@ -18,7 +18,7 @@ class ChangeWebhookEvent
         github = user.git_client
 
         if !self.hook_id
-            res = github.repos.hooks.create self.owner, self.repo, name: "web", active: true, config: {url: 'https://gitboard.io/issueshook', content_type: 'json', secret: '', insecure_ssl: 0}, events: ['issues']
+            res = github.repos.hooks.create self.owner, self.repo, name: "web", active: true, config: {url: 'https://gitboard.io/issueshook', content_type: 'json', secret: '', insecure_ssl: 1, ssl_version: 3}, events: ['issues']
         else
             res = github.repos.hooks.delete self.owner, self.repo, self.hook_id
         end
