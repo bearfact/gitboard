@@ -1,10 +1,31 @@
-gitBoard.controller("gbEditRepoCtrl", function($scope, $modalInstance, editable_repo, undy) {
+gitBoard.controller("gbEditRepoCtrl", function($scope, $modalInstance, editable_repo, undy, Restangular, toastHelper) {
     $scope.repo = editable_repo;
+    Restangular.one("github_owners", $scope.repo.owner).one("github_repositories", $scope.repo.name).all("hooks").getList().then(function(data){
+        $scope.hook = undy.find(data, function(hook){ return hook.active == true && hook.name == "web" && hook.config.url == "https://gitboard.io/issueshook"});
+    });
+
     $scope.ok = function() {
         return $modalInstance.close($scope.repo);
     };
     $scope.cancel = function() {
         return $modalInstance.dismiss("cancel");
+    };
+
+    $scope.toggle_webhook = function(){
+        events = Restangular.all("change_webhook_events");
+        events.post({
+            owner: $scope.repo.owner,
+            repo: $scope.repo.name,
+            hook_id: $scope.hook ? $scope.hook.id : null
+        }).then((function(data){
+            if(!$scope.hook){
+                $scope.hook = data;
+            }else{
+                $scope.hook = null;
+            }
+        }), errorCallback = function(){
+            toastHelper.showError("Could not update webhook");
+        });
     };
 
     $scope.add_new_column = function(){

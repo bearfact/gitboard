@@ -48,7 +48,7 @@
     <div id="headerwrap">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <h1>GitBoard - The kanban board for GitHub&#0153; issues</h1>
                     <a class="btn btn-success btn-lg" href="/auth/github">Sign in with Github</a>
 <!--<form class="form-inline" role="form">
@@ -59,7 +59,7 @@
 </form>		-->
 </div><!-- /col-lg-6 -->
 <div class="col-lg-6">
-    <img class="img-responsive" src="/img/ipad-hand.png" alt="">
+    <img class="img-responsive pull-right" src="/img/ipad-hand.png" alt="">
 </div><!-- /col-lg-6 -->
 
 </div><!-- /row -->
@@ -129,4 +129,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="/js/flatty.bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#headerwrap").height($(window).innerHeight()-150);
+    });
+    </script>
 </body>

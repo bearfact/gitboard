@@ -49,6 +49,17 @@
             </li>
         </ul>
     </tab>
+    <tab heading="Webhook">
+        <div class="row">
+            <div class="col-sm-12">
+                <h5 class="">Github webhook for newly opened or closed issues</h5>
+            </div>
+            <div class="col-sm-4">
+                <a class="btn btn-primary btn-sm" ng-show="hook" ng-click="toggle_webhook()">Enabled</a>
+                <a class="btn btn-default btn-sm" ng-show="!hook" ng-click="toggle_webhook()">Disabled</a>
+            </div>
+        </div>
+    </tab>
 </tabset>
 <div class="row">
     <div class="col-sm-12">

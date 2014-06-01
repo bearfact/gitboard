@@ -24,4 +24,10 @@ class GithubRepositoriesController < ApiController
         #end
         render json: all
     end
+
+    def hooks
+        github = current_user.git_client
+        hooks = github.repos.hooks.list params[:owner], params[:repo]
+        render json: hooks
+    end
 end

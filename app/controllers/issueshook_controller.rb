@@ -1,5 +1,5 @@
-class IssueshookController < ApiController
-    skip_before_filter :authenticate_user
+class IssueshookController < ActionController::Base
+    #skip_before_filter :authenticate_user
 
     def triggered
         issue = params["issue"]

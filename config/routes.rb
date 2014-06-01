@@ -20,6 +20,7 @@ Gitboard::Application.routes.draw do
   get 'milestones', to: 'milestones#index'
   get 'github_owners', to: 'github_owners#index'
   get 'github_owners/:owner/github_repositories', to: 'github_repositories#index'
+  get 'github_owners/:owner/github_repositories/:repo/hooks', to: 'github_repositories#hooks'
   get 'app_bootstrap', to: 'app_bootstrap#index'
   resources :owners, :only => [:index] do
     resources :users, :only => [:index]
@@ -34,6 +35,7 @@ Gitboard::Application.routes.draw do
   resources :assign_issue_events, :only => [:create]
   resources :release_issue_events, :only => [:create]
   resources :change_issues_milestone_events, :only => [:create]
+  resources :change_webhook_events, :only => [:create]
 
 
 
