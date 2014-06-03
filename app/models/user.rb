@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
         where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
             user.provider = auth.provider
             user.uid = auth.uid
+            user.email = auth.info.email
             user.login = auth.extra.raw_info.login
             user.name = auth.extra.raw_info.name
             user.avatar_url = auth.extra.raw_info.avatar_url

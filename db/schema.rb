@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423235159) do
+ActiveRecord::Schema.define(version: 20140603031805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140423235159) do
     t.string   "avatar_url"
     t.hstore   "issues_board_settings"
     t.integer  "status_id",             default: 0, null: false
+    t.string   "email"
   end
 
   add_foreign_key "issues_status_issues", "users", name: "issues_status_issues_last_updated_by_id_fk", column: "last_updated_by_id"

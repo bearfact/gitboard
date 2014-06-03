@@ -48,7 +48,7 @@
     <div id="headerwrap">
         <div class="container">
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-md-5" style="margin-top: 100px;">
                     <h1>GitBoard - The kanban board for GitHub&#0153; issues</h1>
                     <a class="btn btn-success btn-lg" href="/auth/github">Sign in with Github</a>
 <!--<form class="form-inline" role="form">
@@ -58,8 +58,13 @@
 <button type="submit" class="btn btn-warning btn-lg">Invite Me!</button>
 </form>		-->
 </div><!-- /col-lg-6 -->
-<div class="col-lg-6">
-    <img class="img-responsive pull-right" src="/img/ipad-hand.png" alt="">
+<div class="col-md-6 col-md-offset-1">
+    <div style="margin-bottom: 20px;">
+        <img class="img-responsive" src="/img/gitboard-screen.png" alt="">
+    </div>
+    <div>
+        <img class="img-responsive" src="/img/gitboard-screen2.png" alt="">
+    </div>
 </div><!-- /col-lg-6 -->
 
 </div><!-- /row -->
@@ -70,7 +75,7 @@
 <div class="container">
 <div class="row mt centered">
     <div class="col-lg-6 col-lg-offset-3">
-        <h1>GitBoard<br/>improve your workflow</h1>
+        <h1>GitBoard<br/>improves your workflow</h1>
         <h3>Gitboard can help to track the status of your GitHub&#0153; issues</h3>
     </div>
 </div><!-- /row -->
@@ -98,12 +103,31 @@
 </div><!-- /row -->
 </div><!-- /container -->
 
+<div class="container">
+<hr>
+    <div class="row mt centered how-container">
+        <div class="col-lg-12">
+            <h1>How does it work</h1>
+            <h2>
+                <div class="how-column col-md-4">
+                    <p>GitBoard tracks the status of your issue by assigning a label for each kanban column.  It utilizes the Github API so all data, access, and privileges are still controlled by Github.</p>
+                </div>
+                <div class="how-column col-md-4">
+                    <p>There is no need for a separate account, sign in with you Github credentials.  This app uses omniauth and you can revoke its access to your Github account at any time.</p>
+                </div>
+                <div class="how-column col-md-4">
+                    <p>Best of all its free.  Give it a try and please provide any feedback to gitboardapp@gmail.com.</p>
+                </div>
+            </h3>
+        </div>
+    </div><!-- /row -->
+</div>
 
 <div class="container">
 <hr>
     <div class="row mt centered">
         <div class="col-lg-6 col-lg-offset-3">
-            <h1>Our Awesome Team.</h1>
+            <h1>Made by this guy.</h1>
             <h3></h3>
         </div>
     </div><!-- /row -->
@@ -129,9 +153,4 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="/js/flatty.bootstrap.min.js"></script>
-    <script>
-    $(document).ready(function(){
-        $("#headerwrap").height($(window).innerHeight()-150);
-    });
-    </script>
 </body>

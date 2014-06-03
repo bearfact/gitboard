@@ -108,6 +108,23 @@ a:after {
 	margin-bottom: 40px;
 }
 
+.how-container {
+    background-color: #94D19C;
+}
+
+.how-container  h1 {
+    color: #fff;
+    font-weight: 500;
+}
+
+.how-column {
+    padding-right: 15px;
+    padding-left: 10px;
+    text-align: left;
+    color: #fff;
+    font-weight: 500;
+}
+
 .form-control {
 	height: 42px;
 	font-size: 18px;
@@ -116,7 +133,7 @@ a:after {
 
 i {
 	margin: 8px;
-	color: #3498db; 
+	color: #3498db;
 }
 
 
@@ -125,12 +142,12 @@ i {
 	/* background: url(../img/bg01.jpg) no-repeat center top; */
 	background-color: #3498db;
 	margin-top: -20px;
-	padding-top:200px;
+	padding-top:100px;
 	background-attachment: relative;
 	background-position: center center;
-	min-height: 650px;
+	min-height: 750px;
 	width: 100%;
-	
+
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
     -o-background-size: 100%;
