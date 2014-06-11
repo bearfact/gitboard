@@ -20,7 +20,8 @@ class UsersController < ApiController
 
     def show
         user = User.find(params[:id])
-        if !user.nil?
+        Rails.logger.info "*********** #{current_user.inspect}"
+        if !user.nil? && user.id == current_user.id
             render json: user
         else
             render json: nil, status: 404
