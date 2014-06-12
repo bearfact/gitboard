@@ -17,7 +17,10 @@ class Issue
     def self.publish_update_notice(res, owner, repo, channel, event)
         statuses = Repository.where({owner: owner, name: repo}).first.issues_statuses.order("position desc")
         issue = add_caluclated_value res, statuses
-        WebsocketRails[owner+":"+repo+":"+channel].trigger(event, issue)
+        Fiber.new {
+          WebsocketRails[owner+":"+repo+":"+channel].trigger(event, issue)
+        }.resume
+
     end
 
     private
