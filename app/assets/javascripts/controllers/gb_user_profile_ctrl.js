@@ -1,3 +1,3 @@
 "use strict";
 
-gitBoard.controller("gbUserProfileCtrl", gbUserProfileCtrl = function($scope) {});
+gitBoard.controller("gbUserProfileCtrl", function($scope) {});
