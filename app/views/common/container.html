@@ -21,24 +21,10 @@
     <div class="container" style="margin-top: 60px; margin-bottom: 40px">
         <div ng-view class="content-container"></div>
     </div>
-    <!--
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.0/js/epiceditor.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.0/js/toastr.min.js"></script>
-    <script src="js/angular/angular.min.js"></script>
-    <script src="js/angular/angular-route.min.js"></script>
-    <script src="js/angular/angular-resource.min.js"></script>
-    <script src="js/angular/angular-animate.min.js"></script>
-    <script src="js/angular/ui-bootstrap-0.9.0.min.js"></script>
-    <script src="js/angular/ui-bootstrap-tpls-0.9.0.min.js"></script>
-    <script src="js/angular/sortable.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/restangular/latest/restangular.min.js"></script>
-  -->
-    <%= javascript_include_tag "vendor", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+
+
+    <%= javascript_include_tag "vendor" %>
+    <%= javascript_include_tag "application"%>
     <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.0/js/epiceditor.min.js"></script>
     <script>

@@ -11,7 +11,6 @@
 // about supported directives.
 //
 
-//= require turbolinks
 //= require_self
 //= require ./app.js
 //= require_directory ./controllers
@@ -19,4 +18,3 @@
 //= require_directory ./filters
 //= require_directory ./services
 //= require websocket_rails/main
-

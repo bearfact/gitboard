@@ -2,10 +2,10 @@ class GithubRepositoriesController < ApiController
 
     def index
         github = current_user.git_client
-        repos = github.repos.list
+        repos = github.repos.list auto_pagination: true
         org_repos = []
         begin
-          org_repos = github.orgs.get params['owner']+"/repos"
+          org_repos = github.orgs.get params['owner']+"/repos", auto_pagination: true
         rescue
         end
         repos = repos.reject{|r| r.owner.login != params['owner']}
