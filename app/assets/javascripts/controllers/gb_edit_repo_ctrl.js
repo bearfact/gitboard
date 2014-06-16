@@ -23,7 +23,7 @@ gitBoard.controller("gbEditRepoCtrl", function($scope, $modalInstance, editable_
             }else{
                 $scope.hook = null;
             }
-        }), errorCallback = function(){
+        }), function(){
             toastHelper.showError("Could not update webhook");
         });
     };

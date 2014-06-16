@@ -13,7 +13,7 @@ gitBoard.controller("gbNewRepoCtrl", function($scope, toastHelper, Restangular) 
         return baseRepos.post(payload).then((function(res) {
             toastHelper.showSuccess("Your repo has been added");
             return $scope.$emit("repoAddedEvent", null);
-        }), errorCallback = function(err) {
+        }), function(err) {
             return toastHelper.showErrorsFromValidation(err.data);
         });
     };

@@ -11,7 +11,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
     $scope.issues = [];
     var dispatcher = new WebSocketRails(window.location.host+'/websocket');
     dispatcher.on_open = function(data) {
-      console.log('Connection has been established: ', data);
+      //console.log('Connection has been established: ', data);
       // You can trigger new server events inside this callback if you wish.
     }
 
@@ -82,7 +82,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
                 repo: stateService.getCurrentRepository()
             }).then((function(data){
                 angular.extend(issue, data.issue);
-            }), errorCallback = function(){
+            }), function(){
                 toastHelper.showError("Could not complete the request");
             });
         }
@@ -162,7 +162,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
             }).then((function() {
                 toastHelper.showSuccess("Milestone has been updated");
                 issue.milestone = milestone;
-            }), errorCallback = function() {
+            }), function() {
                 toastHelper.showError("Could not complete the request");
             });
         }
@@ -207,7 +207,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
                     toastHelper.showSuccess("You have assigned the issue");
                 else
                     toastHelper.showSuccess("You have unassigned the issue");
-            }), errorCallback = function() {
+            }), function() {
                 return toastHelper.showError("Could not complete the request");
             });
         }
