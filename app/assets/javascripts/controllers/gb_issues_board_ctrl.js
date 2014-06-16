@@ -17,7 +17,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
 
     var channel = dispatcher.subscribe_private(stateService.getCurrentOwner()+":"+ stateService.getCurrentRepository()+":"+"issues");
     channel.bind('updated', function(data) {
-      issue = undy.findWhere($scope.issues, {id: data.id});
+      var issue = undy.findWhere($scope.issues, {id: data.id});
       $scope.$apply(function () {
             angular.extend(issue, data);
         });
