@@ -42,7 +42,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'bcrypt-ruby', '~> 3.1.2'
 
 gem 'websocket-rails'
-gem 'redis'
+#gem 'redis'
 
 # Use unicorn as the app server
 #gem 'unicorn'
