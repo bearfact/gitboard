@@ -25,7 +25,7 @@ class AddIssuesCommentEvent
             github.issues.edit user: self.owner, repo: self.repo, number: self.issue_number, state: "closed"
         end
         res = Issue.fetch_single_issue self.owner, self.repo, self.issue_number, github
-        Issue.publish_update_notice(res, self.owner, self.repo, "issues", "updated")
+        #Issue.publish_update_notice(res, self.owner, self.repo, "issues", "updated")
         res
     end
     alias :save! :save

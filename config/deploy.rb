@@ -25,7 +25,7 @@ namespace :deploy do
   %w[start stop restart].each do |command|
     desc "#{command} thin server"
     task command, roles: :app, except: {no_release: true} do
-      run "/etc/init.d/thin #{command}"
+      run "sudo service thin #{command}"
     end
   end
 
