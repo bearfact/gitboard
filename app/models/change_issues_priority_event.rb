@@ -33,7 +33,7 @@ class ChangeIssuesPriorityEvent
         res = Issue.fetch_single_issue self.owner, self.repo, self.issue_number, github
         Issue.publish_update_notice(res, self.owner, self.repo, "issues", "updated")
         res
-end
+    end
     alias :save! :save
 
 end

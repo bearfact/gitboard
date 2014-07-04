@@ -30,6 +30,7 @@ Gitboard::Application.routes.draw do
     end
   end
 
+  resources :add_issues_comment_events, :only => [:create]
   resources :change_issues_status_events, :only => [:create]
   resources :change_issues_priority_events, :only => [:create]
   resources :assign_issue_events, :only => [:create]

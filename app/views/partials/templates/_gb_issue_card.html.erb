@@ -1,4 +1,4 @@
-<div class="panel issue-card">
+<div class="panel issue-card" ng-hide="issue.state == 'closed'">
     <div class="panel-heading">
         <h3 class="panel-title">
             <a href="{{issue.html_url}}" target="_blank">#{{issue.number}}</a>
@@ -39,6 +39,9 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div class="pull-right clickable comment">
+                <i class="dropdown-toggle glyphicon glyphicon-comment clickable" ng-click="open_comment_modal(issue)"></i>
             </div>
 
         </h3>

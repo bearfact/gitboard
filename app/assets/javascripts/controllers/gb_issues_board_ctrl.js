@@ -1,5 +1,5 @@
 
-gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateService, Restangular, undy, $timeout, toastHelper, issuesStatusService, milestoneHelper, $q) {
+gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateService, Restangular, undy, $timeout, toastHelper, issuesStatusService, milestoneHelper, $q, $modal) {
     $scope.loading = true;
     $scope.filtersopen = false;
     stateService.setCurrentRepository($routeParams.repository_id);
@@ -95,6 +95,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
         $scope.assignable_users = data[2];
         $scope.current_repository = data[3];
         $scope.issues = data[4];
+        $scope.column_count = $scope.current_repository.issues_statuses.length;
 
         $scope.milestones = undy.uniq(undy.pluck(undy.pluck($scope.issues, "milestone"), "title"));
 
@@ -212,6 +213,43 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
             });
         }
     }
+
+
+    $scope.open_comment_modal = function(issue) {
+        var modal_instance;
+        modal_instance = $modal.open({
+            templateUrl: "/partials/gb_issue_comment_form.html",
+            controller: "gbIssueCommentCtrl",
+            resolve: {
+                issue: function() {
+                    return issue;
+                },
+                can_close: function() {
+                    return issue.status.position == $scope.column_count;
+                }
+            }
+        });
+        modal_instance.result.then((function(res) {
+            var events = Restangular.all("add_issues_comment_events");
+            events.post({
+                issue_id: issue.id,
+                issue_number: issue.number,
+                owner: stateService.getCurrentOwner(),
+                repo: stateService.getCurrentRepository(),
+                comment: res.comment,
+                close: res.close
+            }).then((function(data){
+                if(res.close)
+                    toastHelper.showSuccess("Issue closed with comment");
+                else
+                    toastHelper.showSuccess("Comment added to issue");
+            }), function(){
+                toastHelper.showError("Could not complete the request");
+            });
+        }), function() {
+
+        });
+    };
 
     //************************ END PUBLIC *************************************
 
