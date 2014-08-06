@@ -3,9 +3,12 @@ class IssueshookController < ActionController::Base
 
     def triggered
         issue = params["issue"]
+        action = request.request_parameters['action']
+        Rails.logger.info "********** the action is: #{action}**************"
         repository = params["repository"]
-        event = issue["state"] == "open" ? "opened" : "closed"
-        Issue.publish_update_notice(issue, repository["owner"]["login"], repository["name"], "issues", event)
+        if(action == "opened" || action == "closed")
+        	Issue.publish_update_notice(issue, repository["owner"]["login"], repository["name"], "issues", action)
+        end
         render json: "success"
     end
 end
