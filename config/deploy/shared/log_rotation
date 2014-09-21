@@ -1,0 +1,24 @@
+/home/deployer/apps/gitboard/shared/log/*.log {
+    daily
+    missingok
+    rotate 52
+    compress
+    delaycompress
+    notifempty
+    sharedscripts
+    endscript
+    copytruncate
+}
+
+
+/home/deployer/apps/gitboard/current/log/*.log {
+    daily
+    missingok
+    rotate 52
+    compress
+    delaycompress
+    notifempty
+    sharedscripts
+    endscript
+    copytruncate
+}

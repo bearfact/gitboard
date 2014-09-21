@@ -49,8 +49,6 @@ gem 'redis'
 gem 'thin'
 
 
-gem 'capistrano', '~> 2.15.1'
-
 group :production do
   gem 'therubyracer'
 end
@@ -58,6 +56,10 @@ end
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
+  gem 'capistrano', '3.2.1'
+	gem 'capistrano-rails', '~> 1.1.0'
+	gem 'capistrano-bundler'
+	#gem 'capistrano-rvm'
 end
 
 # Use debugger

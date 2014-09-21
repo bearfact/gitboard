@@ -1,70 +1,187 @@
-require "bundler/capistrano"
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-before "deploy:assets:precompile", "bundle:install"
-server "107.170.122.206", :web, :app, :db, primary: true
+set :application, 'gitboard'
+set :deploy_user, 'deployer'
 
-set :application, "gitboard"
-set :user, "deployer"
-set :deploy_to, "/home/#{user}/apps/#{application}"
-set :deploy_via, :remote_cache
-set :use_sudo, false
 
-set :scm, "git"
-set :repository, "git@github.com:bearfact/#{application}.git"
-set :branch, "master"
+set :assets_roles, [:app]
 
-default_run_options[:pty] = true
-#ssh_options[:forward_agent] = true
-set :ssh_options, { :forward_agent => true }
+# setup repo details
+set :scm, :git
+set :repo_url, 'git@github.com:bearfact/gitboard.git'
 
-before 'deploy:assets:precompile' do
-  run "cd #{latest_release} && bower install"
-end
+# how many old releases do we want to keep
+set :keep_releases, 5
 
-namespace :deploy do
-  %w[start stop restart].each do |command|
-    desc "#{command} thin server"
-    task command, roles: :app, except: {no_release: true} do
-      run "service thin #{command}"
+# set :workers, { "users_queue" => 1 }
+
+# Uncomment this line if your workers need access to the Rails environment:
+# set :resque_environment_task, true
+
+# set :resque_log_file, "log/resque.log"
+
+# files we want symlinking to specific entries in shared.
+set :linked_files, %w{config/database.yml}
+
+# dirs we want symlinking to shared
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+# what specs should be run before deployment is allowed to
+# continue, see lib/capistrano/tasks/run_tests.cap
+set :tests, []
+
+# which config files should be copied by deploy:setup_config
+# see documentation in lib/capistrano/tasks/setup_config.cap
+# for details of operations
+set(:config_files, [
+  "nginx-#{fetch(:stage)}.conf",
+  "log_rotation",
+  "monit",
+  "thin-#{fetch(:stage)}.yml",
+  "thin_init.sh"
+])
+
+# which config files should be made executable after copying
+# by deploy:setup_config
+set(:executable_config_files, %w(
+  thin_init.sh
+))
+
+# files which need to be symlinked to other parts of the
+# filesystem. For example nginx virtualhosts, log rotation
+# init scripts etc.
+set(:symlinks, [
+  {
+    source: "nginx-#{fetch(:stage)}.conf",
+    link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
+  },
+  {
+    source: "thin_init.sh",
+    link: "/etc/init.d/thin_#{fetch(:full_app_name)}"
+  },
+  {
+    source: "log_rotation",
+   link: "/etc/logrotate.d/#{fetch(:full_app_name)}"
+  },
+  {
+    source: "monit",
+    link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
+  },
+  {
+    source: "thin-#{fetch(:stage)}.yml",
+    link: "/etc/thin/#{fetch(:full_app_name)}.yml"
+  }
+])
+
+namespace :setup do
+
+  desc "Upload database.yml file."
+  task :upload_yml do
+    on roles(:app) do
+      execute "mkdir -p #{shared_path}/config"
+      upload! StringIO.new(File.read("config/deploy/shared/database.yml")), "#{shared_path}/config/database.yml"
     end
   end
 
-  task :setup_config, roles: :app do
-    sudo "mkdir -p /tmp/sockets"
-    sudo "midir -p /tmp/pids"
-    sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
-    sudo "ln -nfs #{current_path}/config/thin_init.sh /etc/init.d/thin_#{application}"
-    sudo "ln -nfs #{current_path}/config/thin.yml /etc/thin/gitboard.yml"
-    run "mkdir -p #{shared_path}/config"
-    put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
-    puts "Now edit the config files in #{shared_path}."
+  desc "Seed the database."
+  task :seed_db do
+    on roles(:app) do
+      within "#{current_path}" do
+        with rails_env: :production do
+          execute :rake, "db:seed"
+        end
+      end
+    end
   end
-  after "deploy:setup", "deploy:setup_config"
 
-  task :symlink_config, roles: :app do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  desc "Symlinks config files for Nginx and Thin."
+  task :symlink_config do
+    on roles(:app) do
+      execute "rm -f /etc/nginx/sites-enabled/default"
+      execute "sudo ln -nfs #{current_path}/config/deploy/shared/nginx-#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
+      execute "sudo ln -nfs #{current_path}/config/deploy/shared/thin_init.sh /etc/init.d/thin_#{fetch(:application)}"
+      execute "sudo chmod +x /etc/init.d/thin_#{fetch(:application)}"
+      execute "sudo mkdir -p /etc/thin && sudo ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
+      execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation /etc/logrotate.d/#{fetch(:application)}"
+      execute "sudo mkdir -p /etc/monit && sudo ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
+   end
   end
-  after "deploy:finalize_update", "deploy:symlink_config"
 
-  desc "Make sure local git is in sync with remote."
-  task :check_revision, roles: :web do
-    unless `git rev-parse HEAD` == `git rev-parse origin/master`
-      puts "WARNING: HEAD is not the same as origin/master"
+  desc "Restart nginx"
+  task :nginx_restart do
+    on roles(:app) do
+      execute "sudo service nginx restart"
+    end
+  end
+
+end
+
+# this:
+# http://www.capistranorb.com/documentation/getting-started/flow/
+# is worth reading for a quick overview of what tasks are called
+# and when for `cap stage deploy`
+
+namespace :deploy do
+
+  desc "Makes sure local git is in sync with remote."
+  task :check_revision do
+    unless `git rev-parse HEAD` == `git rev-parse origin/#{fetch(:branch)}`
+      puts "WARNING: HEAD is not the same as origin/#{fetch(:branch)}"
       puts "Run `git push` to sync changes."
       exit
     end
   end
 
-  #before "deploy", "deploy:check_revision"
-
-  before "deploy" do
-      #run "cd #{current_release} && bundle exec rake websocket_rails:stop_server"
+  %w[start stop restart].each do |command|
+    desc "#{command} thin server."
+    task command do
+      on roles(:app) do
+        execute "sudo service thin #{command} -C /etc/thin/gitboard.yml"
+      end
+    end
   end
 
-  after 'deploy' do
-    #run "cd #{latest_release} && bundle exec rake websocket_rails:start_server RAILS_ENV=production"
+  desc "bower install all the things"
+  task :bower_install do
+      on roles(:app) do
+          execute "cd #{release_path} && bower install"
+      end
   end
+  after :updating, "deploy:bower_install"
 
-  after "deploy", "deploy:cleanup" # keep only the last 5 releases
+
+
+  # make sure we're deploying what we think we're deploying
+  before :deploy, "deploy:check_revision"
+  # only allow a deploy with passing tests to deployed
+  #before :deploy, "deploy:run_tests"
+  # compile assets locally then rsync
+  #after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  after :finishing, 'deploy:cleanup'
+
+  # remove the default nginx configuration as it will tend
+  # to conflict with our configs.
+  #before 'deploy:setup_config', 'nginx:remove_default_vhost'
+
+  # reload nginx to it will pick up any modified vhosts from
+  # setup_config
+  #after 'deploy:setup_config', 'nginx:reload'
+
+  # Restart monit so it will pick up any monit configurations
+  # we've added
+  #after 'deploy:setup_config', 'monit:restart'
+
+  # As of Capistrano 3.1, the `deploy:restart` task is not called
+  # automatically.
+  before 'deploy:cleanup', 'setup:symlink_config'
+
+  after 'deploy:cleanup', 'deploy:stop'
+  after 'deploy:stop', 'deploy:start'
+  after 'deploy:start', 'setup:nginx_restart'
+
+  #restart resque works
+  #after "deploy:publishing", "deploy:restart_workers"
 
 end
+
