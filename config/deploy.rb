@@ -100,11 +100,11 @@ namespace :setup do
     on roles(:app) do
       execute "sudo rm -f /etc/nginx/sites-enabled/default"
       execute "sudo ln -nfs #{current_path}/config/deploy/shared/nginx-#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
-      execute "ln -nfs #{current_path}/config/deploy/shared/thin_init.sh /etc/init.d/thin_#{fetch(:application)}"
-      execute "chmod +x /etc/init.d/thin_#{fetch(:application)}"
-      execute "mkdir -p /etc/thin && ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
-      execute "ln -nfs #{current_path}/config/deploy/shared/log_rotation /etc/logrotate.d/#{fetch(:application)}"
-      execute "mkdir -p /etc/monit && ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
+      execute "sudo ln -nfs #{current_path}/config/deploy/shared/thin_init.sh /etc/init.d/thin_#{fetch(:application)}"
+      execute "sudo chmod +x /etc/init.d/thin_#{fetch(:application)}"
+      execute "sudo mkdir -p /etc/thin && ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
+      execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation /etc/logrotate.d/#{fetch(:application)}"
+      execute "sudo mkdir -p /etc/monit && ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
    end
   end
 
