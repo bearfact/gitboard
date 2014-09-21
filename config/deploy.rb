@@ -99,19 +99,19 @@ namespace :setup do
   task :symlink_config do
     on roles(:app) do
       execute "rm -f /etc/nginx/sites-enabled/default"
-      execute "sudo ln -nfs #{current_path}/config/deploy/shared/nginx-#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
-      execute "sudo ln -nfs #{current_path}/config/deploy/shared/thin_init.sh /etc/init.d/thin_#{fetch(:application)}"
-      execute "sudo chmod +x /etc/init.d/thin_#{fetch(:application)}"
-      execute "sudo mkdir -p /etc/thin && sudo ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
-      execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation /etc/logrotate.d/#{fetch(:application)}"
-      execute "sudo mkdir -p /etc/monit && sudo ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
+      execute "ln -nfs #{current_path}/config/deploy/shared/nginx-#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
+      execute "ln -nfs #{current_path}/config/deploy/shared/thin_init.sh /etc/init.d/thin_#{fetch(:application)}"
+      execute "chmod +x /etc/init.d/thin_#{fetch(:application)}"
+      execute "mkdir -p /etc/thin && ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
+      execute "ln -nfs #{current_path}/config/deploy/shared/log_rotation /etc/logrotate.d/#{fetch(:application)}"
+      execute "mkdir -p /etc/monit && ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
    end
   end
 
   desc "Restart nginx"
   task :nginx_restart do
     on roles(:app) do
-      execute "sudo service nginx restart"
+      execute "service nginx restart"
     end
   end
 
@@ -137,7 +137,7 @@ namespace :deploy do
     desc "#{command} thin server."
     task command do
       on roles(:app) do
-        execute "sudo service thin #{command} -C /etc/thin/gitboard.yml"
+        execute "service thin #{command} -C /etc/thin/gitboard.yml"
       end
     end
   end
