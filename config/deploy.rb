@@ -104,7 +104,7 @@ namespace :setup do
       execute "sudo chmod +x /etc/init.d/thin_#{fetch(:application)}"
       execute "sudo mkdir -p /etc/thin && sudo ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
       execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation /etc/logrotate.d/#{fetch(:application)}"
-      execute "sudo mkdir -p /etc/monit && sudo ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
+      #execute "sudo mkdir -p /etc/monit && sudo ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
    end
   end
 
