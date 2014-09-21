@@ -98,8 +98,8 @@ namespace :setup do
   desc "Symlinks config files for Nginx and Thin."
   task :symlink_config do
     on roles(:app) do
-      execute "rm -f /etc/nginx/sites-enabled/default"
-      execute "ln -nfs #{current_path}/config/deploy/shared/nginx-#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
+      execute "sudo rm -f /etc/nginx/sites-enabled/default"
+      execute "sudo ln -nfs #{current_path}/config/deploy/shared/nginx-#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
       execute "ln -nfs #{current_path}/config/deploy/shared/thin_init.sh /etc/init.d/thin_#{fetch(:application)}"
       execute "chmod +x /etc/init.d/thin_#{fetch(:application)}"
       execute "mkdir -p /etc/thin && ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
