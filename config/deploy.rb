@@ -102,9 +102,9 @@ namespace :setup do
       execute "sudo ln -nfs #{current_path}/config/deploy/shared/nginx-#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
       execute "sudo ln -nfs #{current_path}/config/deploy/shared/thin_init.sh /etc/init.d/thin_#{fetch(:application)}"
       execute "sudo chmod +x /etc/init.d/thin_#{fetch(:application)}"
-      execute "sudo mkdir -p /etc/thin && ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
+      execute "sudo mkdir -p /etc/thin && sudo ln -nfs #{current_path}/config/deploy/shared/thin-#{fetch(:stage)}.yml /etc/thin/#{fetch(:application)}.yml"
       execute "sudo ln -nfs #{current_path}/config/deploy/shared/log_rotation /etc/logrotate.d/#{fetch(:application)}"
-      execute "sudo mkdir -p /etc/monit && ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
+      execute "sudo mkdir -p /etc/monit && sudo ln -nfs #{current_path}/config/deploy/shared/monit /etc/monit/conf.d/#{fetch(:application)}"
    end
   end
 
