@@ -50,13 +50,13 @@ gem 'thin'
 
 
 group :production do
-  gem 'therubyracer'
+	gem 'therubyracer'
 end
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem 'capistrano', '3.2.1'
+	gem "better_errors"
+	gem "binding_of_caller"
+	gem 'capistrano', '3.2.1'
 	gem 'capistrano-rails', '~> 1.1.0'
 	gem 'capistrano-bundler'
 	#gem 'capistrano-rvm'
@@ -67,9 +67,9 @@ end
 
 gem 'rspec-rails', :group => [:test, :development]
 group :test do
-    gem 'factory_girl_rails'
-    gem 'capybara'
-    gem 'guard-rspec'
+		gem 'factory_girl_rails'
+		gem 'capybara'
+		gem 'guard-rspec'
 end
 
-ruby '2.1.1'
+ruby '2.1.5'

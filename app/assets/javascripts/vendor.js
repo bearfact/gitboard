@@ -12,3 +12,4 @@
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
 //= require restangular/dist/restangular.min.js
 //= require angular-ui-sortable/sortable.min.js
+//= require angular-dragdrop/src/angular-dragdrop.js

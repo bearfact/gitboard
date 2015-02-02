@@ -1,31 +1,32 @@
 {
-  "name": "gitboard",
-  "version": "0.0.1",
-  "authors": [
-    "Joey Crone <joeycrone@gmail.com>"
-  ],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "bower_components",
-    "vendor/assets/components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "~1.2.16",
-    "angular-animate": "~1.2.16",
-    "bootstrap": "~3.1.1",
-    "angular-bootstrap": "~0.10.0",
-    "toastr": "~2.0.1",
-    "angular-resource": "~1.2.16",
-    "angular-route": "~1.2.16",
-    "font-awesome": "~4.0.3",
-    "jquery-ui": "~1.10.4",
-    "moment": "~2.6.0",
-    "underscore": "~1.6.0",
-    "restangular": "~1.4.0",
-    "angular-ui-sortable": "~0.12.6"
-  }
+	"name": "gitboard",
+	"version": "0.0.1",
+	"authors": [
+		"Joey Crone <joeycrone@gmail.com>"
+	],
+	"license": "MIT",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"bower_components",
+		"vendor/assets/components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"angular": "~1.2.16",
+		"angular-animate": "~1.2.16",
+		"bootstrap": "~3.1.1",
+		"angular-bootstrap": "~0.10.0",
+		"toastr": "~2.0.1",
+		"angular-resource": "~1.2.16",
+		"angular-route": "~1.2.16",
+		"font-awesome": "~4.0.3",
+		"jquery-ui": "~1.10.4",
+		"moment": "~2.6.0",
+		"underscore": "~1.6.0",
+		"restangular": "~1.4.0",
+		"angular-ui-sortable": "~0.12.6",
+		"angular-dragdrop": "~1.0.8"
+	}
 }
