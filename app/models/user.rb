@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
     validates_uniqueness_of :login, :scope => :provider
 
     def self.from_omniauth(auth)
-        where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+        thing = auth.slice(:provider, :uid)
+        where(provider: thing.provider, uid: thing.uid).first_or_initialize.tap do |user|
             user.provider = auth.provider
             user.uid = auth.uid
             user.email = auth.info.email

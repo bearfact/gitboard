@@ -2,12 +2,12 @@ class RepositoriesController < ApplicationController
 
     def index
         repositories = current_user.repositories.order(:name);
-        render json: repositories
+        render json: repositories#, each_serializer: RepositorySerializer
     end
 
     def show
         repository = current_user.repositories.where({owner: params[:owner_id], name: params[:id]}).first
-        render json: repository
+        render json: repository#, serializer: RepositorySerializer
     end
 
     def create
@@ -45,7 +45,7 @@ class RepositoriesController < ApplicationController
 
     private
     def repository_parameters
-        params.permit(:owner, :name, :description, :url, issues_statuses_attributes: [:id, :name, :label, :position, :_destroy])
+        params.permit(:owner, :name, :description, :url, issues_statuses_attributes: [:id, :name, :label, :position, :_destroy]).merge!({ user_id: current_user.id })
     end
 
 end

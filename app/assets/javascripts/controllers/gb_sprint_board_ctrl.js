@@ -1,60 +1,69 @@
-
-gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateService, Restangular, undy, $timeout, toastHelper, issuesStatusService, milestoneHelper, $q, $modal) {
+gitBoard.controller("gbSprintBoardCtrl", function($scope, $routeParams, stateService, Restangular, undy, $timeout, toastHelper, issuesStatusService, milestoneHelper, $q, $modal) {
     $scope.loading = true;
     $scope.filtersopen = false;
-    stateService.setCurrentRepository($routeParams.repository_id);
-    stateService.setCurrentOwner($routeParams.owner_id);
+    stateService.setCurrentSprint($routeParams.sprint_id);
     $scope.current_user = stateService.getCurrentUser();
     $scope.milestoneHelper = milestoneHelper;
     var restangular_user = null;
     $scope.query = {login: '', milestone: '', order: 'number'};
     $scope.issues = [];
-    var dispatcher = new WebSocketRails(window.location.host+'/websocket');
-    dispatcher.on_open = function(data) {
-      //console.log('Connection has been established: ', data);
-      // You can trigger new server events inside this callback if you wish.
-    }
-
-    var channel = dispatcher.subscribe_private(stateService.getCurrentOwner()+":"+ stateService.getCurrentRepository()+":"+"issues");
-    channel.bind('updated', function(data) {
-      var issue = undy.findWhere($scope.issues, {id: data.id});
-      $scope.$apply(function () {
-            angular.extend(issue, data);
-        });
-        toastHelper.showSuccess("Issue "+ issue.number+" has been updated");
-    });
-
-    channel.bind('opened', function(data) {
-      $scope.$apply(function () {
-            $scope.issues.push(data);
-        });
-      toastHelper.showSuccess("Issue #"+ data.number+" opened");
-    });
-
-    channel.bind('closed', function(data) {
-        var index = -1;
-        _.each($scope.issues, function(obj, idx){
-            if(obj.id == data.id){
-                  index = idx;
-                  return false;
-              }
-        });
-        if(index > -1){
-            $scope.$apply(function(){
-                $scope.issues.splice(index, 1);
-            });
-        }
-        toastHelper.showSuccess("Issue #"+ data.number+" closed");
-    });
-
-    stateService.setCurrentPage("issues");
+    $scope.total_points = 0;
+    // var dispatcher = new WebSocketRails(window.location.host+'/websocket');
+    // dispatcher.on_open = function(data) {
+    //   //console.log('Connection has been established: ', data);
+    //   // You can trigger new server events inside this callback if you wish.
+    // }
 
 
-    $scope.$on('$destroy', function cleanup() {
-        channel.destroy();
-        dispatcher.disconnect();
-        stateService.setCurrentPage("");
-    });
+    $scope.issues_statuses = [
+      {"id":5,"repository_id":2,"position":1,"name":"Backlog","label":"","created_at":"2015-08-20T02:50:36.310Z","updated_at":"2015-08-20T02:50:36.310Z","repositories_id":null},
+      {"id":6,"repository_id":2,"position":2,"name":"In Progress","label":"status:in_progress","created_at":"2015-08-20T02:50:36.312Z","updated_at":"2015-08-20T02:50:36.312Z","repositories_id":null},
+      {"id":7,"repository_id":2,"position":3,"name":"Ready for QA","label":"status:qa","created_at":"2015-08-20T02:50:36.314Z","updated_at":"2015-08-20T02:50:36.314Z","repositories_id":null},
+      {"id":8,"repository_id":2,"position":4,"name":"Complete","label":"status:passed_qa","created_at":"2015-08-20T02:50:36.316Z","updated_at":"2015-08-20T02:50:36.316Z","repositories_id":null}
+    ];
+
+    $scope.points = [0,1,2,3]
+
+    // var channel = dispatcher.subscribe_private(stateService.getCurrentOwner()+":"+ stateService.getCurrentRepository()+":"+"issues");
+    // channel.bind('updated', function(data) {
+    //   var issue = undy.findWhere($scope.issues, {id: data.id});
+    //   $scope.$apply(function () {
+    //         angular.extend(issue, data);
+    //     });
+    //     toastHelper.showSuccess("Issue "+ issue.number+" has been updated");
+    // });
+    //
+    // channel.bind('opened', function(data) {
+    //   $scope.$apply(function () {
+    //         $scope.issues.push(data);
+    //     });
+    //   toastHelper.showSuccess("Issue #"+ data.number+" opened");
+    // });
+    //
+    // channel.bind('closed', function(data) {
+    //     var index = -1;
+    //     _.each($scope.issues, function(obj, idx){
+    //         if(obj.id == data.id){
+    //               index = idx;
+    //               return false;
+    //           }
+    //     });
+    //     if(index > -1){
+    //         $scope.$apply(function(){
+    //             $scope.issues.splice(index, 1);
+    //         });
+    //     }
+    //     toastHelper.showSuccess("Issue #"+ data.number+" closed");
+    // });
+
+    stateService.setCurrentPage("sprints");
+
+
+    // $scope.$on('$destroy', function cleanup() {
+    //     channel.destroy();
+    //     dispatcher.disconnect();
+    //     stateService.setCurrentPage("");
+    // });
 
 
     $scope.$watch( function () { return stateService.getFilterMode(); }, function (data) {
@@ -70,7 +79,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
         var events, old_status, status;
         if (issue.new_position !== issue.status.position) {
             old_status = issue.status.label;
-            status = issuesStatusService.getStatusByPosition(issue.new_position, $scope.current_repository.issues_statuses);
+            status = issuesStatusService.getStatusByPosition(issue.new_position, $scope.issues_statuses);
             issue.status = status;
             events = Restangular.all("change_issues_status_events");
             events.post({
@@ -78,8 +87,8 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
                 status: issue.status.label,
                 old_status: old_status,
                 issue_number: issue.number,
-                owner: stateService.getCurrentOwner(),
-                repo: stateService.getCurrentRepository()
+                owner: issue.owner,
+                repo: issue.repository
             }).then((function(data){
                 angular.extend(issue, data.issue);
             }), function(){
@@ -90,15 +99,12 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
 
 
      function load(data) {
-        $scope.all_milestones = data[0];
+        $scope.current_sprint = data[0]
         $scope.priorities = data[1];
-        $scope.assignable_users = data[2];
-        $scope.current_repository = data[3];
-        $scope.issues = data[4];
-        $scope.sprints = data[5];
-        $scope.column_count = $scope.current_repository.issues_statuses.length;
+        $scope.issues = data[2];
+        $scope.sprints = data[3];
+        $scope.column_count = $scope.issues_statuses.length;
 
-        $scope.milestones = undy.uniq(undy.pluck(undy.pluck($scope.issues, "milestone"), "title"));
 
         $scope.users = [];
         var user_names = [];
@@ -110,15 +116,15 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
         });
 
 
-        if($scope.current_user.issues_board_settings){
-            $scope.query = $scope.current_user.issues_board_settings;
-            if(!undy.contains($scope.milestones, $scope.query.milestone)){
-                $scope.query.milestone = "";
-            }
-            if(!undy.contains(user_names, $scope.query.login)){
-                $scope.query.login = "";
-            }
-        }
+        // if($scope.current_user.issues_board_settings){
+        //     $scope.query = $scope.current_user.issues_board_settings;
+        //     if(!undy.contains($scope.milestones, $scope.query.milestone)){
+        //         $scope.query.milestone = "";
+        //     }
+        //     if(!undy.contains(user_names, $scope.query.login)){
+        //         $scope.query.login = "";
+        //     }
+        // }
 
         $scope.my_issues_count = undy.reduce($scope.issues, function(memo, res){
             if(res.assignee.login == $scope.current_user.login){
@@ -133,7 +139,14 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
             }
             return memo;
         }, 0);
-};
+
+        calculate_total_points();
+
+    };
+
+    function calculate_total_points() {
+      $scope.total_points = _.reduce($scope.issues, function(memo, issue){ return memo + issue.points; }, 0);
+    }
 
 
     //**************** PUBLIC STUFF ******************
@@ -159,10 +172,26 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
             events = Restangular.all("change_issues_sprint_events");
             events.post({
                 issue: {owner: issue.owner, repository: issue.repository, number: issue.number, sprint_issue_id: issue.sprint_issue_id},
-                sprint_id: sprint.id || 0
+                sprint_id: sprint.id
             }).then((function() {
                 toastHelper.showSuccess("Sprint has been updated");
                 issue.sprint = sprint;
+            }), function() {
+                toastHelper.showError("Could not complete the request");
+            });
+        }
+    }
+
+    $scope.change_points = function(issue, points){
+        if(issue.points != points){
+            var errorCallback, events;
+            debugger;
+            sprint_issue = Restangular.one("sprints", stateService.getCurrentSprint()).one("sprint_issues", issue.sprint_issue_id);
+            sprint_issue.points = points;
+            sprint_issue.put().then((function() {
+                toastHelper.showSuccess("Points hav been updated");
+                issue.points = points;
+                calculate_total_points();
             }), function() {
                 toastHelper.showError("Could not complete the request");
             });
@@ -296,12 +325,14 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
 
     //*********************** FETCH DATA *********************************
     var promises = [];
-     promises.push(Restangular.all("milestones").getList({repo: stateService.getCurrentRepository(),owner: stateService.getCurrentOwner()}));
-     promises.push(Restangular.all("issues_priorities").getList());
-     promises.push(Restangular.one("owners", stateService.getCurrentOwner()).all("users").getList());
-     promises.push(Restangular.one("owners", stateService.getCurrentOwner()).one("repositories", stateService.getCurrentRepository()).get());
-     promises.push(Restangular.one("owners", stateService.getCurrentOwner()).one("repositories", stateService.getCurrentRepository()).all("issues").getList());
-     promises.push(Restangular.all("sprints").getList());
+    //promises.push(Restangular.all("milestones").getList({repo: stateService.getCurrentRepository(),owner: stateService.getCurrentOwner()}));
+    promises.push(Restangular.one("sprints", stateService.getCurrentSprint()).get())
+    promises.push(Restangular.all("issues_priorities").getList());
+    promises.push(Restangular.one("sprints", stateService.getCurrentSprint()).all("sprint_issues").getList());
+    promises.push(Restangular.all("sprints").getList());
+    //promises.push(Restangular.one("owners", stateService.getCurrentOwner()).all("users").getList());
+    //promises.push(Restangular.one("owners", stateService.getCurrentOwner()).one("repositories", stateService.getCurrentRepository()).get());
+    //promises.push(Restangular.one("owners", stateService.getCurrentOwner()).one("repositories", stateService.getCurrentRepository()).all("issues").getList());
 
     $q.all(promises).then(function (data) {
         load(data);

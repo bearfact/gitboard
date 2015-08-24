@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails', '4.2.3'
 
 #github api
 gem 'omniauth-github'
@@ -11,7 +11,6 @@ gem 'faraday', '~> 0.8.8'
 # Use mysql as the database for Active Record
 #gem 'mysql2'
 gem 'pg'
-gem 'foreigner'
 
 gem 'active_model_serializers'
 gem 'kaminari'
@@ -51,9 +50,9 @@ gem 'thin'
 
 gem 'capistrano', '~> 2.15.1'
 
-group :production do
-  gem 'therubyracer'
-end
+#group :production do
+#  gem 'therubyracer'
+#end
 
 group :development do
   gem "better_errors"
@@ -69,5 +68,3 @@ group :test do
     gem 'capybara'
     gem 'guard-rspec'
 end
-
-ruby '2.1.1'

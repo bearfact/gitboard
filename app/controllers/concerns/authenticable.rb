@@ -7,22 +7,22 @@ module Authenticable
     end
 
     def authenticate_user
-        respond_to do |format|
-            format.html {
+        # respond_to do |format|
+            # format.html {
                 if current_user.nil?
                     redirect_to "/signin"
                 elsif(current_user.status_id != 1)
                     redirect_to beta_url
                 end
-            }
-            format.json {
-                if current_user.nil?
-                    render json: {error: "session_timeout"}, status: 403
-                elsif(current_user.status_id != 1)
-                    render json: {error: "terms_of_service"}, status: 403
-                end
-            }
-        end
+            # }
+            # format.json {
+                # if current_user.nil?
+                #     render json: {error: "session_timeout"}, status: 403
+                # elsif(current_user.status_id != 1)
+                #     render json: {error: "terms_of_service"}, status: 403
+                # end
+            # }
+        #end
     end
 
     def current_user

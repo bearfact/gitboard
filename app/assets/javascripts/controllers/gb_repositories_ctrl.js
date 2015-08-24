@@ -37,6 +37,7 @@ gitBoard.controller("gbRepositoriesCtrl", function($scope, $modal, Restangular, 
     $scope.$on("repoAddedEvent", function(event, data) {
         fetchRepos();
     });
+    
     var fetchRepos = function() {
         Restangular.all("repositories").getList().then(function(res){
             $scope.repositories = res;

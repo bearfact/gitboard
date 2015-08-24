@@ -28,9 +28,17 @@ gitBoard.config([
             templateUrl: "partials/repositories.html",
             controller: "gbRepositoriesCtrl"
         });
+        $routeProvider.when("/sprints", {
+            templateUrl: "partials/sprints.html",
+            controller: "gbSprintsCtrl"
+        });
         $routeProvider.when("/owners/:owner_id/repositories/:repository_id/issues_board", {
             templateUrl: "partials/issues_board.html",
             controller: "gbIssuesBoardCtrl"
+        });
+        $routeProvider.when("/sprints/:sprint_id/board", {
+            templateUrl: "partials/sprint_board.html",
+            controller: "gbSprintBoardCtrl"
         });
         $routeProvider.when("/owners/:owner_id/repositories/:repository_id/milestones", {
             templateUrl: "partials/milestones.html",

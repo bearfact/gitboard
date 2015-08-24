@@ -10,12 +10,15 @@ Gitboard::Application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'sign_out', to: 'sessions#destroy'
-  get '/partials/*path' => 'partials#index'
+  #get '/partials/*path' => 'partials#index'
   post '/issueshook' => 'issueshook#triggered'
 
   resources :users
   resources :sessions
   resources :repositories
+  resources :sprints do
+    resources :sprint_issues, only: [:index, :update]
+  end
   resources :issues_priorities, :only => [:index]
   get 'milestones', to: 'milestones#index'
   get 'github_owners', to: 'github_owners#index'
@@ -36,6 +39,7 @@ Gitboard::Application.routes.draw do
   resources :assign_issue_events, :only => [:create]
   resources :release_issue_events, :only => [:create]
   resources :change_issues_milestone_events, :only => [:create]
+  resources :change_issues_sprint_events, :only => [:create]
   resources :change_webhook_events, :only => [:create]
 
 

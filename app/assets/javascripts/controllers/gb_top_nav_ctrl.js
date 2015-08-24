@@ -1,4 +1,4 @@
-gitBoard.controller("gbTopNavCtrl", function($scope, $location, stateService, $window) {
+gitBoard.controller("gbTopNavCtrl", function($scope, $location, stateService, $window, $q, Restangular) {
     $scope.user = {
         login: ""
     };
@@ -36,5 +36,28 @@ gitBoard.controller("gbTopNavCtrl", function($scope, $location, stateService, $w
     $scope.signout = function() {
         return $window.location.href = "/sign_out";
     };
+
+    function fetchData() {
+      var promises = [];
+      promises.push(Restangular.all("repositories").getList())
+      promises.push(Restangular.all("sprints").getList())
+
+      $q.all(promises).then(function (data) {
+        $scope.repositories = data[0];
+        $scope.sprints = data[1];
+      }, function(error) {
+
+      });
+    }
+
+    $scope.$on("repoAddedEvent", function(event, data) {
+        fetchData();
+    });
+
+    $scope.$on("sprintAddedEvent", function(event, data) {
+        fetchData();
+    });
+    
     $scope.getCurrentUser();
+    fetchData();
 });

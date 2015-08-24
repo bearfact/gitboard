@@ -5,9 +5,10 @@ class CreateIssuesStatus < ActiveRecord::Migration
       t.integer :position, null: false
       t.string :name, null: false
       t.string :label, null: false
-      t.foreign_key :repositories, null: false
       t.timestamps
     end
-    add_index :issues_statuses, :repository_id
+    add_reference :issues_statuses, :repositories, index: true, foreign_key: true
+    #add_foreign_key :issues_statuses, :repositories
+    #add_index :issues_statuses, :repository_id
   end
 end

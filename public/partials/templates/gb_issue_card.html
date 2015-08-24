@@ -2,7 +2,45 @@
     <div class="panel-heading">
         <h3 class="panel-title">
             <a href="{{issue.html_url}}" target="_blank">#{{issue.number}}</a>
-            <span class="pull-right issue-text-popover clickable" popover="{{issue.body || ' '}}"  role="button" popover-placement="bottom"><i class="glyphicon glyphicon-file"></i></span>
+            <!--<span class="pull-right issue-text-popover clickable" popover="{{issue.body || ' '}}"  role="button" popover-placement="bottom"><i class="glyphicon glyphicon-file"></i></span>
+            -->
+            <div class="pull-right clickable sprint-dropdown" ng-if="points">
+                <div class="dropdown">
+                    <i class="dropdown-toggle glyphicon glyphicon-signal clickable" type="button" id="dropdownMenu5" data-toggle="dropdown"></i>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu5">
+                        <li role="presentation" ng-repeat="point_value in points">
+                            <a role="menuitem" tabindex="-1" ng-click="change_points(issue, point_value)">
+                                <i class="glyphicon glyphicon-star" ng-show="issue.points == point_value"></i>
+                                &nbsp;{{point_value}} points
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="pull-right clickable sprint-dropdown">
+                <div class="dropdown">
+                    <i class="dropdown-toggle glyphicon glyphicon-fire clickable" type="button" id="dropdownMenu0" data-toggle="dropdown"></i>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu0">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" ng-click="change_sprint(issue, 0)">
+                                <i class="glyphicon glyphicon-star" ng-show="!issue.sprint.id"></i>
+                                &nbsp;No Sprint
+                            </a>
+                        </li>
+                        <li role="presentation" ng-repeat="sprint in sprints">
+                            <a role="menuitem" tabindex="-1" ng-click="change_sprint(issue, sprint)">
+                                <i class="glyphicon glyphicon-star" ng-show="issue.sprint.id == sprint.id"></i>
+                                &nbsp;{{sprint.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
             <div class="pull-right clickable milestone-dropdown">
                 <div class="dropdown">
                     <i class="dropdown-toggle glyphicon glyphicon-road clickable" type="button" id="dropdownMenu1" data-toggle="dropdown"></i>
@@ -27,6 +65,8 @@
                     </ul>
                 </div>
             </div>
+
+
             <div class="pull-right clickable priority-dropdown">
                 <div class="dropdown">
                     <i class="dropdown-toggle glyphicon glyphicon-exclamation-sign clickable" type="button" id="dropdownMenu3" data-toggle="dropdown"></i>
@@ -47,10 +87,8 @@
         </h3>
     </div>
     <div class="panel-body">
-        <div>
-            {{issue.title}}
-        </div>
-
+        <div class="issue-title">{{issue.title}}</div>
+        <div ng-if="issue.body" class="issue-description">{{issue.body}}</div>
     </div>
     <div class="panel-footer">
         <div class="clickable users-dropdown">
@@ -75,6 +113,7 @@
         <div class="h-separator"></div>
         <div class="badges">
             <span class="issue-badge" ng-style="{'background-color': '#'+label.color}"ng-repeat="label in issue.labels">{{label.name}}</span>
+            <span ng-if="issue.sprint" class="issue-badge" style="background-color: white; color: #333;">sprint: {{issue.sprint.name}}</span>
         </div>
     </div>
 </div>

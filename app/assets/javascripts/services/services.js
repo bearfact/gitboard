@@ -70,12 +70,19 @@ gitBoard.value("version", "0.1").factory("myHttpInterceptor", function($q, $loca
 }).service("stateService", function() {
     var currentOwner, currentRepository, currentUser, issues_statuses, currentPage, filter_mode;
     filter_mode = false;
+    currentSprint = void 0;
     currentRepository = void 0;
     currentOwner = void 0;
     currentUser = void 0;
     currentPage = void 0;
     issues_statuses = void 0;
     return {
+        getCurrentSprint: function() {
+            return currentSprint;
+        },
+        setCurrentSprint: function(id) {
+            return currentSprint = id;
+        },
         getCurrentRepository: function() {
             return currentRepository;
         },
