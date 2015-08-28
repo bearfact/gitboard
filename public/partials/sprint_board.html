@@ -11,7 +11,7 @@
     </div>
 
     <div class="pull-right days-left" ng-if="sprint.due_date">
-        <div class="alert alert-{{threat_level(completed_points, total_points, days_left)}}">Due in {{days_left}} days</div>
+        <div class="clickable alert alert-{{threat_level(completed_points, total_points, days_left)}}" ng-click="open_edit_modal(sprint)">Due in {{days_left}} days</div>
     </div>
 </div>
 

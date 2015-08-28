@@ -199,6 +199,36 @@ gitBoard.controller("gbSprintBoardCtrl", function($scope, $routeParams, stateSer
       return "info";
     }
 
+    $scope.open_edit_modal = function(sprint) {
+        var editable_sprint, modal_instance;
+        editable_sprint = angular.copy(sprint);
+        modal_instance = $modal.open({
+            templateUrl: "/partials/gb_sprint_form.html",
+            controller: "gbEditSprintCtrl",
+            resolve: {
+                editable_sprint: function() {
+                    return editable_sprint;
+                }
+            }
+        });
+        modal_instance.result.then((function(edited_sprint) {
+            angular.copy(edited_sprint, sprint);
+            Restangular.one("sprints", sprint.id).get({
+                single: true
+            }).then(function(repository) {
+                sprint = Restangular.copy(sprint);
+                sprint["issues_statuses_attributes"] = sprint.issues_statuses
+                sprint.put().then(function(){
+                    calculate_days_left();
+                    toastHelper.showSuccess("Sprint has been updated");
+                });
+            });
+        }), function() {
+            //toastHelper.showError("Error saving repository");
+        });
+    };
+
+
     //*************** WATCHERS **********************
     $scope.$watch("query", function(values){
         if(restangular_user == null){
