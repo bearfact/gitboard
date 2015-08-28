@@ -125,7 +125,7 @@
         <div class="h-separator"></div>
         <div class="badges">
             <span class="issue-badge" ng-style="{'background-color': '#'+label.color}"ng-repeat="label in issue.labels">{{label.name}}</span>
-            <span ng-if="!is_sprint && issue.sprint" class="issue-badge sprint-badge">sprint: {{issue.sprint.name}}</span>
+            <span ng-if="!is_sprint && issue.sprint" class="issue-badge sprint-badge"><a href="#/sprints/{{issue.sprint.id}}/board">sprint: {{issue.sprint.name}}</a></span>
             <span ng-if="is_sprint" class="issue-badge repo-badge">repo: {{issue.repository}}</span>
         </div>
     </div>
