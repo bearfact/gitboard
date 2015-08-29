@@ -56,5 +56,5 @@ gitBoard.controller("gbRepositoriesCtrl", function($scope, $modal, Restangular, 
             $scope.repositories = res;
         });
     };
-    fetchRepos();
+    //fetchRepos();
 });
