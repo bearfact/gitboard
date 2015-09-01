@@ -164,7 +164,7 @@ gitBoard.controller("gbSprintBoardCtrl", function($scope, $routeParams, stateSer
       if($scope.sprint.due_date){
         var b = moment(new Date());
         var a = moment($scope.sprint.due_date);
-        $scope.days_left = a.diff(b, 'days');
+        $scope.days_left = a.diff(b, 'days') + 1;
       }
     }
 
