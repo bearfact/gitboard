@@ -14,3 +14,5 @@
 //= require angular-ui-sortable/sortable.min.js
 //= require angular-sweetalert/SweetAlert.min.js
 //= require sweetalert/dist/sweetalert.min.js
+//= require marked/lib/marked.js
+//= require angular-md/dist/angular-md.min.js

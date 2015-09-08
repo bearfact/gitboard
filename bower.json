@@ -27,6 +27,10 @@
     "underscore": "~1.6.0",
     "restangular": "~1.4.0",
     "angular-ui-sortable": "~0.12.6",
-    "angular-sweetalert": "latest"
+    "angular-sweetalert": "latest",
+    "angular-md": "latest"
+  },
+  "resolutions": {
+    "angular": "~1.2.16"
   }
 }

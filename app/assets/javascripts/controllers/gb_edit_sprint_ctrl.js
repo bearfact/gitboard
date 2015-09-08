@@ -7,7 +7,10 @@ gitBoard.controller("gbEditSprintCtrl", function($scope, $modalInstance, editabl
     ];
 
     $scope.ok = function() {
-        return $modalInstance.close($scope.sprint);
+      if($scope.sprint.due_date){
+        $scope.sprint.due_date = moment($scope.sprint.due_date).endOf('day');
+      }
+      return $modalInstance.close($scope.sprint);
     };
     $scope.cancel = function() {
         return $modalInstance.dismiss("cancel");

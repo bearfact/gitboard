@@ -1,5 +1,5 @@
 
-var gitBoard = angular.module("gitBoard", ["ngAnimate", "ngRoute", "restangular", "ui.bootstrap", "ui.sortable", "oitozero.ngSweetAlert"]);
+var gitBoard = angular.module("gitBoard", ["ngAnimate", "ngRoute", "restangular", "ui.bootstrap", "ui.sortable", "oitozero.ngSweetAlert", "yaru22.md"]);
 
 angular.element(document).ready(function() {
     return jQuery.ajax({

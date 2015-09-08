@@ -91,7 +91,7 @@
     </div>
     <div class="panel-body">
         <div class="issue-title">{{issue.title}}</div>
-        <div ng-if="issue.body" class="issue-description">{{issue.body}}</div>
+        <div ng-if="issue.body" class="issue-description"><md ng-model="issue.body"></md></div>
     </div>
     <div class="panel-footer">
         <div class="clickable users-dropdown">
