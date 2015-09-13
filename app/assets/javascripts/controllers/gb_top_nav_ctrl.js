@@ -44,7 +44,7 @@ gitBoard.controller("gbTopNavCtrl", function($scope, $location, stateService, $w
 
       $q.all(promises).then(function (data) {
         $scope.repositories = data[0];
-        $scope.sprints = data[1];
+        $scope.sprints = _.where(data[1], {status: 'active'})
       }, function(error) {
 
       });

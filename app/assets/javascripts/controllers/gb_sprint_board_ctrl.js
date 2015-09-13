@@ -24,7 +24,6 @@ gitBoard.controller("gbSprintBoardCtrl", function($scope, $routeParams, stateSer
 
     var channel = dispatcher.subscribe_private("sprint:"+stateService.getCurrentSprint()+":"+"issues");
     channel.bind('updated', function(data) {
-      console.log('received updated from sprint channel:', data)
       var issue = undy.findWhere($scope.issues, {id: data.id});
       $scope.$apply(function () {
         if(issue) {
@@ -38,7 +37,6 @@ gitBoard.controller("gbSprintBoardCtrl", function($scope, $routeParams, stateSer
     });
 
     channel.bind('closed', function(data) {
-      console.log('received closed from sprint channel:', data)
         var index = -1;
         _.each($scope.issues, function(obj, idx){
             if(obj.id == data.id){
@@ -150,8 +148,6 @@ gitBoard.controller("gbSprintBoardCtrl", function($scope, $routeParams, stateSer
     };
 
     function calculate_total_points() {
-      console.log('calculating the points');
-      console.log($scope.issues);
       var max_status = _.max($scope.sprint.issues_statuses, function(status){ return status.position });
       $scope.total_points = _.reduce($scope.issues, function(memo, issue){ return memo + issue.points; }, 0);
       var filtered = _.filter($scope.issues, function(issue){
