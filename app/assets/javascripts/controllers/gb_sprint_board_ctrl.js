@@ -112,7 +112,7 @@ gitBoard.controller("gbSprintBoardCtrl", function($scope, $routeParams, stateSer
         $scope.sprint = data[0]
         $scope.priorities = data[1];
         $scope.issues = data[2];
-        $scope.sprints = data[3];
+        $scope.sprints = _.where(data[3], {status: 'active'})
         $scope.column_count = $scope.sprint.issues_statuses.length;
 
 

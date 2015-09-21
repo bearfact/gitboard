@@ -106,7 +106,7 @@ gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateSer
         $scope.assignable_users = data[2];
         $scope.current_repository = data[3];
         $scope.issues = data[4];
-        $scope.sprints = data[5];
+        $scope.sprints = _.where(data[5], {status: 'active'})
         $scope.column_count = $scope.current_repository.issues_statuses.length;
 
         $scope.milestones = undy.uniq(undy.pluck(undy.pluck($scope.issues, "milestone"), "title"));
