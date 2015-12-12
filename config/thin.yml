@@ -1,4 +1,4 @@
-pid: /tmp/pids/thin.pid
+pid: /home/deployer/tmp/pids/thin.pid
 timeout: 30
 wait: 30
 log: /home/deployer/apps/gitboard/current/log/thin.log
@@ -8,6 +8,6 @@ environment: production
 max_persistent_conns: 512
 servers: 1
 daemonize: true
-socket: /tmp/sockets/thin.sock
+socket: /home/deployer/tmp/sockets/thin.sock
 chdir: /home/deployer/apps/gitboard/current
 tag: gitboard

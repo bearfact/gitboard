@@ -31,8 +31,8 @@ namespace :deploy do
   end
 
   task :setup_config, roles: :app do
-    sudo "mkdir -p /tmp/sockets"
-    sudo "midir -p /tmp/pids"
+    sudo "mkdir -p /home/deployer/tmp/sockets"
+    sudo "midir -p /home/deployer/tmp/pids"
     sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
     sudo "ln -nfs #{current_path}/config/thin_init.sh /etc/init.d/thin_#{application}"
     sudo "ln -nfs #{current_path}/config/thin.yml /etc/thin/gitboard.yml"

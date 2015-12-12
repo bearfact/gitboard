@@ -48,7 +48,6 @@ gem 'hiredis'
 #gem 'unicorn'
 gem 'thin'
 
-
 gem 'capistrano', '~> 2.15.1'
 
 #group :production do
