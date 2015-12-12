@@ -26,18 +26,19 @@ namespace :deploy do
   %w[start stop restart].each do |command|
     desc "#{command} thin server"
     task command, roles: :app, except: {no_release: true} do
-      run "service thin #{command}"
+      run "service thin_gitboard #{command}"
     end
   end
 
   task :setup_config, roles: :app do
     sudo "mkdir -p /home/deployer/tmp/sockets"
-    sudo "midir -p /home/deployer/tmp/pids"
+    sudo "mkdir -p /home/deployer/tmp/pids"
+    sudo "mkdir -p /etc/thin"
     sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
     sudo "ln -nfs #{current_path}/config/thin_init.sh /etc/init.d/thin_#{application}"
     sudo "ln -nfs #{current_path}/config/thin.yml /etc/thin/gitboard.yml"
     run "mkdir -p #{shared_path}/config"
-    put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
+    #put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
     puts "Now edit the config files in #{shared_path}."
   end
   after "deploy:setup", "deploy:setup_config"
