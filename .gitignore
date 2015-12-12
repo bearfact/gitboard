@@ -20,3 +20,4 @@
 
 /vendor/assets/components
 /config/database.yml
+/node_modules
