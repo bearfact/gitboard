@@ -1,7 +1,7 @@
 require "bundler/capistrano"
 
 before "deploy:assets:precompile", "bundle:install"
-server "107.170.122.206", :web, :app, :db, primary: true
+server "104.131.126.207", :web, :app, :db, primary: true
 
 set :application, "gitboard"
 set :user, "deployer"
@@ -18,6 +18,7 @@ default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
 
 before 'deploy:assets:precompile' do
+  run "cd #{latest_release} && npm install"
   run "cd #{latest_release} && bower install"
 end
 
