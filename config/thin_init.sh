@@ -13,7 +13,7 @@ set -e
 # Feel free to change any of the following variables for your app:
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/home/deployer/apps/gitboard/current
-PID=$APP_ROOT/tmp/pids/thin.pid
+PID=/tmp/pids/thin.pid
 CMD="cd $APP_ROOT; bundle exec thin start -C /etc/thin/gitboard.yml"
 AS_USER=deployer
 set -u
