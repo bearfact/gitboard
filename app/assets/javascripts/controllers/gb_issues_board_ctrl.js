@@ -1,6 +1,6 @@
 
 gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateService, Restangular, undy, $timeout, toastHelper, issuesStatusService, milestoneHelper, $q, $modal) {
-    console.log(stateService)
+    console.log(stateService.getCurrentUser())
 
     $scope.loading = true;
     $scope.filtersopen = false;

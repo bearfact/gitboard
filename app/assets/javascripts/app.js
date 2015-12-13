@@ -7,12 +7,11 @@ angular.element(document).ready(function() {
         contentType: "application/json",
         dataType: "json",
         success: function(result) {
-            //angular.bootstrap(document, ['gitBoard']);
-            var ss = angular.element(document).injector().get("stateService");
+            app = angular.bootstrap(document, ["gitBoard"]);
+            var ss = app.get("stateService");
             ss.setCurrentUser(result["current_user"]);
             ss.setIssuesStatuses(result["statuses"]);
-        },
-        async: false
+        }
     });
 });
 
