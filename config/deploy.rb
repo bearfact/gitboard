@@ -26,13 +26,15 @@ namespace :deploy do
   %w[start stop restart].each do |command|
     desc "#{command} thin server"
     task command, roles: :app, except: {no_release: true} do
-      run "service thin_gitboard #{command}"
+      sudo "mkdir -p #{shared_path}/sockets"
+      sudo "mkdir -p #{shared_path}/pids"
+      run "service thin_gitboard #{command} -C /etc/thin/gitboard.yml"
     end
   end
 
   task :setup_config, roles: :app do
-    sudo "mkdir -p /tmp/sockets"
-    sudo "mkdir -p /tmp/pids"
+    sudo "mkdir -p #{shared_path}/sockets"
+    sudo "mkdir -p #{shared_path}/pids"
     sudo "mkdir -p /etc/thin"
     sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
     sudo "ln -nfs #{current_path}/config/thin_init.sh /etc/init.d/thin_#{application}"
