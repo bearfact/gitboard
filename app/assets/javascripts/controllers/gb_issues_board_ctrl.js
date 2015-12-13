@@ -1,5 +1,7 @@
 
 gitBoard.controller("gbIssuesBoardCtrl", function($scope, $routeParams, stateService, Restangular, undy, $timeout, toastHelper, issuesStatusService, milestoneHelper, $q, $modal) {
+    console.log(stateService)
+
     $scope.loading = true;
     $scope.filtersopen = false;
     stateService.setCurrentRepository($routeParams.repository_id);
