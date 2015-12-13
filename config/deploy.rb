@@ -26,9 +26,11 @@ namespace :deploy do
   %w[start stop restart].each do |command|
     desc "#{command} thin server"
     task command, roles: :app, except: {no_release: true} do
-      run "mkdir -p #{shared_path}/sockets"
-      run "mkdir -p #{shared_path}/pids"
-      run "service thin_gitboard #{command} -C /etc/thin/gitboard.yml"
+      run "rm -rf /tmp/pids"
+      run "rm -rf /tmp/sockets"
+      run "mkdir -p /tmp/sockets"
+      run "mkdir -p /tmp/pids"
+      run "service thin_gitboard #{command}"
     end
   end
 

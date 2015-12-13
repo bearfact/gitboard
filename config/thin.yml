@@ -1,4 +1,4 @@
-pid: /home/deployer/apps/gitboard/current/pids/tmp/thin.pid
+pid: /tmp/pids/tmp/thin.pid
 timeout: 30
 wait: 30
 log: /home/deployer/apps/gitboard/current/log/thin.log
