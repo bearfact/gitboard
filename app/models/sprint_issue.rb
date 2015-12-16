@@ -23,20 +23,15 @@ class SprintIssue < ActiveRecord::Base
     repos = sprint.sprint_issues.map { |si| {owner: si.owner, name: si.repository} }.uniq
     issues_from_github = []
     issues_for_sprint = []
-    all_accessible_repos = current_user.git_client.repos.list.map{ |repo| "#{repo.owner.login}/#{repo.name}" }
-    Rails.logger.info "******** repos: #{repos.inspect}"
+    all_accessible_repos = current_user.git_client.repos.list(per_page: 1000, page: 1).map { |repo| "#{repo.owner.login}/#{repo.name}" }
     repos.each do |repo|
       # checking if they have the repo registered which implies they have access, should just check for access
       #unless current_user.repositories.where(owner: repo[:owner], name: repo[:name]).first.nil?
       if all_accessible_repos.include?("#{repo[:owner]}/#{repo[:name]}")
-        Rails.logger.info "******** does inclued: #{repo[:owner]} / #{repo[:name]}"
         # which issues do I want from this repo
         issues_from_github = Issue.fetch_by_owner_and_repo(repo[:owner], repo[:name], current_user.git_client)
-        Rails.logger.info "******** issues from github : #{issues_from_github}"
         sprint.sprint_issues.where(owner: repo[:owner], repository: repo[:name]).each do |si|
-          Rails.logger.info "******** working on sprint issue #{si.inspect}"
           matching_issues = issues_from_github.select{ |issue| si.issue_number == issue['number']}
-          Rails.logger.info "******** matchin issues: #{matching_issues.inspect}"
           if matching_issues.any?
             issues_for_sprint << Issue.transform(matching_issues[0])
           end
