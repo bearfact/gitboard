@@ -7,12 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && NODE_ENV=production webpack",
     "dev": "NODE_ENV=development node dev-server.js",
-    "watch": "rimraf dist && NODE_ENV=production webpack --progress --colors --watch"
+    "watch": "rimraf public/dist && NODE_ENV=production webpack --progress --colors --watch"
   },
   "author": "Joseph Crone",
   "license": "ISC",
   "dependencies": {
-    "rim-raf": "latest",
+    "rimraf": "^2.6.1",
     "adm-dtp": "^1.2.0",
     "angular": "^1.6.3",
     "angular-animate": "^1.6.3",
