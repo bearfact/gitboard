@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-5, col-lg-5">
+        <ol class="breadcrumb">
+            <li><a href="#!/repositories">Repositories</a></li>
+            <li><a>{{stateService.getCurrentOwner()}}/{{stateService.getCurrentRepository()}}</a></li>
+            <li class="active">Milestones</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row " ng-repeat="milestone in milestones">
+    <div class="col-md-12, col-lg-12">
+        <div class="well">
+            <h4><span style="padding-right: 20px;">{{milestone.title}}</span><a href="{{github_url()}}" class="glyphicon glyphicon-new-window" target="_blank"></a></h4>
+            <div class="progress progress-striped">
+                <div class="progress-bar progress-bar-{{milestoneHelper.progressBarType(milestone)}}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{calc_milestone_percent(milestone)}}%;">
+                    <span class="sr-only">{{calc_milestone_percent(milestone)}}% Complete</span>
+                </div>
+            </div>
+            <div><h6 ng-bind-html="milestone.description | markdown"></h6></div>
+        </div>
+    </div>
+</div>

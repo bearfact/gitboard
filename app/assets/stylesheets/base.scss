@@ -1,0 +1,335 @@
+@import 'repositories';
+@import 'milestones';
+@import 'issues_board';
+
+
+html,
+body{
+    background-color: #fcfcfc !important;
+}
+.navbar-brand {
+  height: 45px;
+}
+.h-separator{
+    width: 100%;
+    border-top: 1px solid #e5e5e5;
+    padding: 0px 4px;
+    margin: 5px 0px;
+    box-sizing: border-box;}
+.full-height{
+    padding-bottom: 100%;
+    margin-bottom: -100%;}
+.clickable{
+    cursor: pointer;}
+.pull-right.clickable{
+    margin-left: 10px;}
+a{
+    color: #333;}
+a:hover{
+    color: #333;}
+.bottom-20{
+    margin-bottom: 20px;}
+.navbar-right{
+    img{
+        height: 32px;
+        border-radius: 17px;
+        float: left;
+        margin-top: 8px;
+        margin-right: 5px;}}
+form.edit-repository{
+    margin: 30px 45px;
+    margin-left: 20px;}
+@media (min-width: 992px){
+    .new-repository{
+        border-left: 1px solid #e5e5e5;
+        padding-left: 50px;}}
+.sweet-alert.showSweetAlert{
+    border-radius: 0px;}
+.sweet-alert .sa-button-container button{
+    border-radius: 0px;}
+.gly-spin{
+    -webkit-animation: spin 1s infinite linear;
+    -moz-animation: spin 1s infinite linear;
+    -o-animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;}
+// @-moz-keyframes spin {
+//     0% {
+//         -moz-transform: rotate(0deg);
+//       }
+//     100% {
+//         -moz-transform: rotate(359deg);
+//       }
+//   }
+// @-webkit-keyframes spin{
+//     0%
+//         -webkit-transform: rotate(0deg);
+//     100%
+//         -webkit-transform: rotate(359deg);}
+// @-o-keyframes spin{
+//     0%
+//         -o-transform: rotate(0deg);
+//     100%
+//         -o-transform: rotate(359deg);}
+// @keyframes spin{
+//     0%
+//         -webkit-transform: rotate(0deg);
+//         transform: rotate(0deg);
+//     100%
+//         -webkit-transform: rotate(359deg);
+//         transform: rotate(359deg);}
+.gly-rotate-90{
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);}
+.alert.alert-info{
+    background-color: #8CD4F5;
+    border-color: #73BBDC;}
+#toast-container > div{
+    -moz-border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+    border-radius: 0px !important;}
+.dropdown-toggle.clickable.well{
+    padding: 10px;
+    border-color: #ccc;
+    color: #555;}
+.days-left{
+    margin-right: 10px;}
+.points-complete > .well{
+    padding: 14px;}
+
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.content-container {
+    position: absolute;
+    left: 45px;
+    right: 45px;
+}
+
+.modal {
+    display: block !important;
+}
+
+/* you can also define the transition style
+   on the base class as well (.repeat-item) */
+.ng-enter,
+.ng-leave {
+  -webkit-transition:0.2s linear all;
+  transition:0.2s linear all;
+}
+
+.ng-enter,
+.ng-leave.ng-leave-active {
+  opacity:0;
+}
+.ng-leave,
+.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.loader{
+    position: fixed;
+    z-index: 3;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: -30px;
+    width: 60px;
+    height: 60px;
+    list-style: none;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    -moz-box-sizing: conent-box;
+    visibility: hidden;
+}
+
+@-webkit-keyframes 'loadbars' {
+    0%{
+        height: 10px;
+        margin-top: 25px;
+    }
+    50%{
+        height:50px;
+        margin-top: 0px;
+    }
+    100%{
+        height: 10px;
+        margin-top: 25px;
+    }
+}
+
+.loader li{
+    background-color: #008CBA;
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-right: 5px;
+    box-shadow: 0px 100px 20px rgba(0,0,0,0.2);
+}
+.loader li:first-child{
+    -webkit-animation: loadbars 0.6s cubic-bezier(0.645,0.045,0.355,1) infinite 0s;
+}
+.loader li:nth-child(2){
+    -webkit-animation: loadbars 0.6s ease-in-out infinite -0.2s;
+}
+.loader li:nth-child(3){
+    -webkit-animation: loadbars 0.6s ease-in-out infinite -0.4s;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+    .loader {
+        visibility: visible;
+    }
+}
+
+/* Side notes for calling out things
+-------------------------------------------------- */
+
+/* Base styles (regardless of theme) */
+.bs-callout {
+  margin: 20px 0;
+  padding: 15px 30px 15px 15px;
+  border-left: 5px solid #eee;
+  background-color: #f9f9f9;
+}
+.bs-callout h4 {
+  margin-top: 0;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code,
+.bs-callout .highlight {
+  background-color: #fff;
+}
+
+/* Themes for different contexts */
+.bs-callout-danger {
+  background-color: #fcf2f2;
+  border-color: #dFb5b4;
+}
+.bs-callout-warning {
+  background-color: #FCF8E3;
+  border-color: #D08002;
+}
+.bs-callout-info {
+  background-color: #D9EDF7;
+  border-color: #3DB5D8;
+}
+
+.bs-callout-success {
+  background-color: #DFF0D8;
+  border-color: #3C9A5F;
+}
+
+.bs-callout-primary {
+  background-color: #008CBA;
+  border-color: #008CBA;
+}
+
+.breadcrumb {
+  border: none;
+  font-size: 12px;
+}
+
+.milestone-dropdown .progress {
+  height: 15px;
+  margin: 0px 3px;
+  margin-top: -3px;
+  margin-bottom: 3px;
+}
+
+tr td.drop-container:nth-child(1) .panel {
+  border-color: #3db5d8;
+}
+tr td.drop-container:nth-child(1) .panel > .panel-heading {
+  color: #5bc0de;
+  background-color: #d9edf7;
+  border-color: #3db5d8;
+}
+tr td.drop-container:nth-child(1) .panel > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #3db5d8;
+}
+tr td.drop-container:nth-child(1) .panel > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #3db5d8;
+}
+tr td.drop-container:nth-child(3) .panel {
+  border-color: #008cba;
+}
+tr td.drop-container:nth-child(3) .panel > .panel-heading {
+  color: #ffffff;
+  background-color: #008cba;
+  border-color: #008cba;
+}
+tr td.drop-container:nth-child(3) .panel > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #008cba;
+}
+tr td.drop-container:nth-child(3) .panel > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #008cba;
+}
+tr td.drop-container:nth-child(5) .panel {
+  border-color: #d08002;
+}
+tr td.drop-container:nth-child(5) .panel > .panel-heading {
+  color: #e99002;
+  background-color: #fcf8e3;
+  border-color: #d08002;
+}
+tr td.drop-container:nth-child(5) .panel > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #d08002;
+}
+tr td.drop-container:nth-child(5) .panel > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #d08002;
+}
+tr td.drop-container:nth-child(7) .panel,
+tr td.drop-container:nth-child(9) .panel {
+  border-color: #3c9a5f;
+}
+tr td.drop-container:nth-child(7) .panel > .panel-heading,
+tr td.drop-container:nth-child(9) .panel > .panel-heading {
+  color: #43ac6a;
+  background-color: #dff0d8;
+  border-color: #3c9a5f;
+}
+tr td.drop-container:nth-child(7) .panel > .panel-heading + .panel-collapse .panel-body,
+tr td.drop-container:nth-child(9) .panel > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #3c9a5f;
+}
+tr td.drop-container:nth-child(7) .panel > .panel-footer + .panel-collapse .panel-body,
+tr td.drop-container:nth-child(9) .panel > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #3c9a5f;
+}
+
+.panel-default > .panel-heading {
+  color: #333333;
+  background-color: #f5f5f5;
+  border-color: #dddddd;
+}
+.panel-default > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #dddddd;
+}
+.panel-default > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #dddddd;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+.btn .fa {
+  margin-right: 7px;
+}

@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '5.0.2'
+gem 'json', '1.8.5'
 
 #github api
 gem 'omniauth-github'
@@ -12,18 +13,18 @@ gem 'faraday', '~> 0.8.8'
 #gem 'mysql2'
 gem 'pg'
 
-gem 'active_model_serializers'
+gem 'active_model_serializers', '0.9.3'
 gem 'kaminari'
 
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+# gem 'sass-rails', '~> 4.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+# gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+# gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -35,17 +36,13 @@ gem 'coffee-rails', '~> 4.0.0'
 #font awesome icons
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+# gem 'jbuilder', '~> 1.2'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'bcrypt'
 
-gem 'websocket-rails'
-gem 'redis'
-gem 'hiredis'
+gem 'pusher'
 
-# Use unicorn as the app server
-#gem 'unicorn'
 gem 'thin'
 
 gem 'capistrano', '~> 2.15.1'

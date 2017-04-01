@@ -1,10 +1,9 @@
 require "bundler/capistrano"
 
-before "deploy:assets:precompile", "bundle:install"
-server "104.131.126.207", :web, :app, :db, primary: true
+server "52.41.167.147", :web, :app, :db, primary: true
 
 set :application, "gitboard"
-set :user, "deployer"
+set :user, "ubuntu"
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
@@ -14,22 +13,21 @@ set :repository, "git@github.com:bearfact/#{application}.git"
 set :branch, "master"
 
 default_run_options[:pty] = true
-#ssh_options[:forward_agent] = true
 set :ssh_options, { :forward_agent => true }
 
 before 'deploy:assets:precompile' do
   run "cd #{latest_release} && npm install"
-  run "cd #{latest_release} && bower install"
+  run "cd #{latest_release} && npm run build"
 end
 
 namespace :deploy do
   %w[start stop restart].each do |command|
     desc "#{command} thin server"
     task command, roles: :app, except: {no_release: true} do
-      run "rm -rf /tmp/pids"
-      run "rm -rf /tmp/sockets"
-      run "mkdir -p /tmp/sockets"
-      run "mkdir -p /tmp/pids"
+      run "rm -rf /home/#{user}/apps/#{application}/current/tmp/pids"
+      run "rm -rf /home/#{user}/apps/#{application}/current/tmp/sockets"
+      run "mkdir -p /home/#{user}/apps/#{application}/current/tmp/sockets"
+      run "mkdir -p /home/#{user}/apps/#{application}/current/tmp/pids"
       run "service thin_gitboard #{command}"
     end
   end
@@ -42,7 +40,7 @@ namespace :deploy do
     sudo "ln -nfs #{current_path}/config/thin_init.sh /etc/init.d/thin_#{application}"
     sudo "ln -nfs #{current_path}/config/thin.yml /etc/thin/gitboard.yml"
     run "mkdir -p #{shared_path}/config"
-    #put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
+    put File.read("config/database.yml"), "#{shared_path}/config/database.yml"
     puts "Now edit the config files in #{shared_path}."
   end
   after "deploy:setup", "deploy:setup_config"

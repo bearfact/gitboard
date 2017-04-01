@@ -1,0 +1,38 @@
+.milestones-container {
+	position: fixed;
+	bottom: -120px;
+	left: 0px;
+	right: 0px;
+	height: 150px;
+	transition: bottom 0.5s;
+	.milestones-tag {
+		width: 100px;
+		margin: 0 auto;
+		border-width: 1px 1px 0 1px;
+		border-style: solid;
+		border-color: #e5e5e5;
+		text-align: center;
+		border-radius: 4px;
+		background-color: #D9EDF7;
+		height: 30px;
+		cursor: pointer;
+		margin-bottom: -1px;
+	}
+	.milestones-drop-zones {
+		position: relative;
+		height: 120px;
+		background-color: #f0f0f0;
+		border-top: 1px solid #e5e5e5;
+		.milestone {
+			height: 100%;
+			margin: 10px;
+			background-color: red;
+			width: 200px;
+			float: left;
+		}
+	}
+}
+
+.milestones-container.active {
+	bottom: 0px;
+}

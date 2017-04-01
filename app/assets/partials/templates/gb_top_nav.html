@@ -1,0 +1,51 @@
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/repositories">GitBoard</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav" ng-show="logged_in">
+
+          <li class="dropdown" ng-class="{'active': current_page == 'repos'}">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">Repositories <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#!/repositories">Home</a></li>
+              <li role="separator" class="divider"></li>
+              <li ng-repeat="repo in repositories"><a href="#!/owners/{{repo.owner}}/repositories/{{repo.name}}/issues_board">{{repo.name}}</a></li>
+            </ul>
+          </li>
+
+
+          <li class="dropdown" ng-class="{'active': current_page == 'sprints'}">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">Sprints <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#!/sprints">Home</a></li>
+              <li role="separator" class="divider"></li>
+              <li ng-repeat="sprint in sprints"><a href="#!/sprints/{{sprint.id}}/board">{{sprint.name}}</a></li>
+            </ul>
+          </li>
+
+          <li ng-class="{'active': current_page == 'milestones'}" ng-show="repo_selected"><a href="#!{{repo_url}}/milestones">Milestones</a></li>
+          <li ng-class="{'active': current_page == 'issues'}" ng-show="repo_selected"><a href="#!{{repo_url}}/issues_board">Issues</a></li>
+          <li ng-show="current_page == 'issues'" ng-click="toggle_filter()"><a href=""><i class="glyphicon glyphicon-search"></i></a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right" ng-show="logged_in">
+           <img ng-src="{{user.avatar_url}}"/>
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{user.login}} <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="" ng-click="signout()">Sign Out</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>

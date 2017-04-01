@@ -11,6 +11,7 @@ Gitboard::Application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get 'sign_out', to: 'sessions#destroy'
   post '/issueshook' => 'issueshook#triggered'
+  post '/pusher/auth' => 'pusher#auth'
 
   resources :users
   resources :sessions

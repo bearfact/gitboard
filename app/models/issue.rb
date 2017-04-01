@@ -24,17 +24,8 @@ class Issue
         repo = issue['repository']
         sprint_id = issue['sprint']['id'] if issue['sprint']
 
-        Fiber.new {
-          WebsocketRails[owner+":"+repo+":"+channel].trigger(event, issue)
-        }.resume
-
-
-        if sprint_id
-          Fiber.new {
-            WebsocketRails["sprint:#{sprint_id.to_s}:#{channel}"].trigger(event, issue)
-          }.resume
-        end
-
+        Pusher.trigger("private-repo_#{owner}_#{repo}", event, issue) if !Rails.env.test?
+        Pusher.trigger("private-sprint_#{sprint_id}", event, issue) if sprint_id.present? && !Rails.env.test?
     end
 
     def self.transform(issue)

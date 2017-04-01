@@ -1,0 +1,61 @@
+<tabset class="repo-edit-modal">
+  <tab heading="Details">
+    <form class="form-horizontal edit-repository" role="form" id="new_repository">
+      <fieldset>
+        <legend>Edit a Sprint</legend>
+        <label for="sprint_owner" class="control-label">Organization</label>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="sprint_owner" name="sprint_owner" placeholder="organization" ng-model="sprint.owner" autocomplete="on" disabled required>
+          </div>
+        </div>
+        <label for="sprint_name" class="control-label">Name</label>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="sprint_name" name="sprint_name" placeholder="name" ng-model="sprint.name" autocomplete="off" required>
+          </div>
+        </div>
+        <label for="sprint_due_date" class="control-label">Due Date</label>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <adm-dtp ng-model='sprint.due_date'></adm-dtp>
+          </div>
+        </div>
+        <label for="sprint_status" class="control-label">Status</label>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <select class="form-control" id="sprint_status" name="sprint_status" placeholder="sprint status" ng-model="sprint.status" autocomplete="off" required ng-options="status.id as status.name for status in statuses"></select>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </tab>
+  <tab heading="Columns">
+    <div class="row">
+      <div class="col-sm-8">
+        <h5 class="">* Drag to reorder columns</h5>
+      </div>
+      <div class="col-sm-4">
+        <a class="btn btn-primary btn-sm pull-right add-column-button" ng-click="add_new_column()"><i class="fa fa-plus"></i>Add New Column</a>
+      </div>
+    </div>
+    <ul class="column-list" dnd-list="sprint.issues_statuses">
+      <li ng-repeat="item in sprint.issues_statuses" class="item" dnd-draggable="item" dnd-effect-allowed="move" dnd-selected="models.selected = item" dnd-moved="itemMoved($index, item)">
+        <div class="bs-callout" ng-class="{'bs-callout-success': !item.id, 'bs-callout-danger': item._destroy}">
+          <input type="text" ng-model="item.name" />
+          <input type="text" ng-model="item.label" />
+          <a class="pull-right remove-button-icon" ng-click="remove_column(item)" ng-show="!item._destroy"><i class="fa fa-times-circle-o fa-2x"></i></a>
+          <a class="btn btn-link btn-sm  pull-right" ng-click="undo_column(item)" ng-show="item._destroy">Undo</a>
+        </div>
+      </li>
+    </ul>
+  </tab>
+</tabset>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="pull-right">
+      <button type="button" class="btn btn-link btn-sm" ng-click="cancel()">Cancel</button>
+      <button type="button" class="btn btn-success btn-sm" ng-click="ok()">Save</button>
+    </div>
+  </div>
+</div>
