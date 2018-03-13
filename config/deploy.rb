@@ -15,10 +15,10 @@ set :branch, "master"
 default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
 
-before 'deploy:assets:precompile' do
-  run "cd #{latest_release} && npm install"
-  run "cd #{latest_release} && npm run build"
-end
+#before 'deploy:assets:precompile' do
+#  run "cd #{latest_release} && npm install"
+#  run "cd #{latest_release} && npm run build"
+#end
 
 namespace :deploy do
   %w[start stop restart].each do |command|
@@ -28,7 +28,7 @@ namespace :deploy do
       run "rm -rf /home/#{user}/apps/#{application}/current/tmp/sockets"
       run "mkdir -p /home/#{user}/apps/#{application}/current/tmp/sockets"
       run "mkdir -p /home/#{user}/apps/#{application}/current/tmp/pids"
-      run "service thin_gitboard #{command}"
+      run "cd /home/#{user}/apps/#{application}/current && bundle exec thin #{command} -C /home/#{user}/apps/#{application}/current/config/thin.yml"
     end
   end
 

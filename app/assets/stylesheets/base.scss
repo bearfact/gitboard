@@ -334,6 +334,6 @@ tr td.drop-container:nth-child(9) .panel > .panel-footer + .panel-collapse .pane
   margin-right: 7px;
 }
 
-.ADMdtp-box {
-  z-index: 10000;
+.ADMdtp-box.ADMdtp-calendar-container {
+  z-index: 10000 !important;
 }
