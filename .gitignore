@@ -22,3 +22,4 @@
 /config/database.yml
 /node_modules
 /config/github.yml
+config/github.yml
