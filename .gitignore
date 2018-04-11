@@ -21,3 +21,4 @@
 /vendor/assets/components
 /config/database.yml
 /node_modules
+/config/github.yml
