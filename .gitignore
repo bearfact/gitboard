@@ -23,3 +23,5 @@
 /node_modules
 /config/github.yml
 config/github.yml
+/config/initializers/secret_token.rb
+config/initializers/secret_token.rb
