@@ -1,5 +1,4 @@
 class SprintsController < ApplicationController
-
   def index
     sprints = Sprint.accessible_by_user(current_user)
     render json: sprints
@@ -41,7 +40,6 @@ class SprintsController < ApplicationController
   private
 
   def sprint_parameters
-    params.permit(:name, :due_date, :owner, :status, issues_statuses_attributes: [:id, :name, :label, :position, :_destroy]).merge!({ user_id: current_user.id })
+    params.permit(:name, :due_date, :owner, :status, issues_statuses_attributes: [:id, :name, :label, :position, :_destroy]).merge!({user_id: current_user.id})
   end
-
 end

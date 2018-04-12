@@ -1,5 +1,5 @@
 class Sprint < ActiveRecord::Base
-  belongs_to :creator, foreign_key: :user_id, class_name: 'User'
+  belongs_to :creator, foreign_key: :user_id, class_name: "User"
   has_many :sprint_issues, dependent: :destroy
   has_many :issues_statuses, foreign_key: :sprint_id, dependent: :destroy
   accepts_nested_attributes_for :issues_statuses, allow_destroy: true
@@ -13,7 +13,7 @@ class Sprint < ActiveRecord::Base
   enum status: {
     active: 1,
     inactive: 2,
-    complete: 3
+    complete: 3,
   }
 
   def self.accessible_by_user(user)
@@ -28,7 +28,7 @@ class Sprint < ActiveRecord::Base
 
   def add_default_issues_statuses
     sprints = Sprint.where({owner: owner})
-    if(sprints.count == 1)
+    if (sprints.count == 1)
       IssuesStatus.create({sprint_id: self.id, position: 1, label: "", name: "Backlog"})
       IssuesStatus.create({sprint_id: self.id, position: 2, label: "status:in_progress", name: "In Progress"})
       IssuesStatus.create({sprint_id: self.id, position: 3, label: "status:qa", name: "Ready for QA"})
@@ -44,5 +44,4 @@ class Sprint < ActiveRecord::Base
     repos = Repository.where(name: name, owner: owner)
     IssuesStatus.delete_all "sprint_id = #{id}" if repos.count == 1
   end
-
 end

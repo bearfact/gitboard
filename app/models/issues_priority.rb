@@ -1,31 +1,30 @@
 class IssuesPriority
-
   GITHUB_DB_STORE = false
 
   DATA = {
-      1 => {
-          :id    => 1,
-          :name  => "High",
-          :label => 'high',
-          :github_label => 'priority:high'
-      },
-      2 => {
-          :id    => 2,
-          :name  => "Medium",
-          :label => 'medium',
-          :github_label => 'priority:medium'
-      },
-      3 => {
-          :id    => 3,
-          :name  => "Low",
-          :label => 'low',
-          :github_label => 'priority:low'
-      },
-      4 => {
-          :id    => 4,
-          :name  => "None",
-          :label => 'none'
-      }
+    1 => {
+      :id => 1,
+      :name => "High",
+      :label => "high",
+      :github_label => "priority:high",
+    },
+    2 => {
+      :id => 2,
+      :name => "Medium",
+      :label => "medium",
+      :github_label => "priority:medium",
+    },
+    3 => {
+      :id => 3,
+      :name => "Low",
+      :label => "low",
+      :github_label => "priority:low",
+    },
+    4 => {
+      :id => 4,
+      :name => "None",
+      :label => "none",
+    },
   }
 
   def self.find(id)
@@ -42,7 +41,7 @@ class IssuesPriority
   end
 
   def self.all
-    DATA.map{|(id, attrs)| self.new(attrs) }.sort
+    DATA.map { |(id, attrs)| self.new(attrs) }.sort
   end
 
   def self.id_for(label)
@@ -55,15 +54,15 @@ class IssuesPriority
 
   def initialize(attrs = nil)
     attrs ||= {}
-    @id   = attrs[:id]
+    @id = attrs[:id]
     @name = attrs[:name]
-    @label  = attrs[:label]
+    @label = attrs[:label]
     @github_label = attrs[:github_label]
   end
 
   # defines: active?, deactivated?
   DATA.each do |id, attrs|
-    define_method("#{attrs[:label]}?"){ self.id == id }
+    define_method("#{attrs[:label]}?") { self.id == id }
   end
 
   def <=>(other)
@@ -79,5 +78,4 @@ class IssuesPriority
       super "An issue priority with id #{key.inspect} doesn't exist"
     end
   end
-
 end

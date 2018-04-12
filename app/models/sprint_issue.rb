@@ -17,7 +17,6 @@ class SprintIssue < ActiveRecord::Base
   #     issue = Issue.transform(issue)
   # end
 
-
   def self.fetch_for_sprint(sprint_id, current_user)
     sprint = Sprint.accessible_by_user(current_user).find(sprint_id)
     repos = sprint.sprint_issues.map { |si| {owner: si.owner, name: si.repository} }.uniq
@@ -31,7 +30,7 @@ class SprintIssue < ActiveRecord::Base
         # which issues do I want from this repo
         issues_from_github = Issue.fetch_by_owner_and_repo(repo[:owner], repo[:name], current_user.git_client)
         sprint.sprint_issues.where(owner: repo[:owner], repository: repo[:name]).each do |si|
-          matching_issues = issues_from_github.select{ |issue| si.issue_number == issue['number']}
+          matching_issues = issues_from_github.select { |issue| si.issue_number == issue["number"] }
           if matching_issues.any?
             issues_for_sprint << Issue.transform(matching_issues[0])
           end

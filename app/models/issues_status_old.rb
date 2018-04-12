@@ -1,37 +1,36 @@
 class IssuesStatusOld
-
   GITHUB_DB_STORE = false
 
   DATA = {
-      1 => {
-          :id    => 1,
-          :name  => "Pending",
-          :label => 'pending',
-      },
-      2 => {
-          :id    => 2,
-          :name  => "In Progress",
-          :label => 'in_progress',
-          :github_label => 'status:working'
-      },
-      3 => {
-          :id    => 3,
-          :name  => "Fixed",
-          :label => 'fixed',
-          :github_label => 'status:fixed'
-      },
-      4 => {
-          :id    => 4,
-          :name  => "Ready For QA",
-          :label => 'ready_for_qa',
-          :github_label => 'status:qa'
-      },
-      5 => {
-          :id    => 5,
-          :name  => "Complete",
-          :label => 'complete',
-          :github_label => 'status:passed_qa'
-      }
+    1 => {
+      :id => 1,
+      :name => "Pending",
+      :label => "pending",
+    },
+    2 => {
+      :id => 2,
+      :name => "In Progress",
+      :label => "in_progress",
+      :github_label => "status:working",
+    },
+    3 => {
+      :id => 3,
+      :name => "Fixed",
+      :label => "fixed",
+      :github_label => "status:fixed",
+    },
+    4 => {
+      :id => 4,
+      :name => "Ready For QA",
+      :label => "ready_for_qa",
+      :github_label => "status:qa",
+    },
+    5 => {
+      :id => 5,
+      :name => "Complete",
+      :label => "complete",
+      :github_label => "status:passed_qa",
+    },
   }
 
   def self.find(id)
@@ -48,7 +47,7 @@ class IssuesStatusOld
   end
 
   def self.all
-    DATA.map{|(id, attrs)| self.new(attrs) }.sort
+    DATA.map { |(id, attrs)| self.new(attrs) }.sort
   end
 
   def self.id_for(label)
@@ -61,15 +60,15 @@ class IssuesStatusOld
 
   def initialize(attrs = nil)
     attrs ||= {}
-    @id   = attrs[:id]
+    @id = attrs[:id]
     @name = attrs[:name]
-    @label  = attrs[:label]
+    @label = attrs[:label]
     @github_label = attrs[:github_label]
   end
 
   # defines: active?, deactivated?
   DATA.each do |id, attrs|
-    define_method("#{attrs[:label]}?"){ self.id == id }
+    define_method("#{attrs[:label]}?") { self.id == id }
   end
 
   def <=>(other)
@@ -85,5 +84,4 @@ class IssuesStatusOld
       super "An user status with id #{key.inspect} doesn't exist"
     end
   end
-
 end
