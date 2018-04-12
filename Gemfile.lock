@@ -65,6 +65,8 @@ GEM
       xpath (~> 2.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     daemons (1.2.4)
     debug_inspector (0.0.2)
     descendants_tracker (0.0.4)
@@ -103,6 +105,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    hashdiff (0.3.7)
     hashie (3.5.5)
     highline (1.7.8)
     httpclient (2.8.3)
@@ -229,6 +232,7 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     ruby_dep (1.5.0)
+    safe_yaml (1.0.4)
     shellany (0.0.1)
     slop (3.6.0)
     sprockets (3.7.1)
@@ -246,6 +250,10 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    webmock (3.3.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -273,6 +281,7 @@ DEPENDENCIES
   rails (= 5.0.2)
   rspec-rails
   thin
+  webmock
 
 BUNDLED WITH
-   1.14.3
+   1.16.1
